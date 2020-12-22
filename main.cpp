@@ -1,28 +1,7 @@
-#include <raylib.h>
+#include <Manager/Manager.h>
 
-#define SCREEN_WIDTH 720
-#define SCREEN_HEIGHT 1440
-
-
-void mainScreen() {
-
-}
-
-
-int main() {
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "pui");
-    SetTargetFPS(60);
-
-    while(!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(BLACK);
-
-        mainScreen(); // todo state machine / switching views
-
-        EndDrawing();
-    }
-
-    CloseWindow();
-
+int main([[maybe_unused]] int argc, char** argv) {
+    Manager mgr(argv);
+    mgr.run();
     return 0;
 }

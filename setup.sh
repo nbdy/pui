@@ -7,5 +7,3 @@ fi
 if [ -f /usr/bin/apt ]; then
   sudo apt install -y cmake build-essential gcc g++ git
 fi
-
-git submodule update --init
