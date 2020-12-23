@@ -1,7 +1,7 @@
 #include <Manager/Manager.h>
 
-int main([[maybe_unused]] int argc, char** argv) {
-    Manager mgr(argv);
+int main(int argc, char** argv) {
+    Manager mgr(argc, argv);
     mgr.run();
     return 0;
 }
