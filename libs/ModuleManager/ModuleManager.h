@@ -13,15 +13,72 @@
 #include <Utils/Utils.h>
 #include <BaseModule/BaseModule.h>
 
+typedef std::vector<std::string> strVec;
+typedef std::map<std::string, BaseModule*> moduleMap;
+
 class ModuleManager {
-    std::vector<std::string> loadableModules;
-    std::map<std::string, BaseModule*> loadedModules;
+    std::string moduleDirectory;
+    strVec loadableModules;
+    moduleMap loadedModules;
 
 public:
-    ModuleManager();
     explicit ModuleManager(const std::string& path);
 
     ~ModuleManager();
+
+    /*!
+     * loads all available modules
+     */
+    void loadAllModules();
+
+    /*!
+     * loads only the specified modules
+     * @param modules
+     */
+    void loadModules(const strVec& modules);
+
+    /*!
+     * unloads all modules
+     */
+    void unloadAllModules();
+
+    /*!
+     * unloads only the specified modules
+     * @param modules
+     */
+    void unloadModules(const strVec& modules);
+
+    /*!
+     * collects all shareMaps from modules
+     * @return
+     */
+    context accumulateContext();
+
+    /*!
+     * calls work() on all modules
+     * @param ctx
+     */
+    void work(const context& ctx);
+
+    /*!
+     * calls draw() on all modules
+     */
+    void drawModules();
+
+    /*!
+     * get the module directory
+     * @return
+     */
+    [[nodiscard]] std::string getModuleDirectory() const;
+
+    /*!
+     * sets the module directory
+     * unloads all modules
+     * does not load modules in this directory
+     * loadAllModules has to be called by the developer
+     * @param value
+     */
+    void setModuleDirectory(const std::string& value);
 
     /*!
      * puts all .so files in a vector
