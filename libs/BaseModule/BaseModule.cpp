@@ -4,7 +4,7 @@
 
 #include "BaseModule.h"
 
-BaseModule::BaseModule() = default;
+BaseModule::BaseModule(): type(UI), sharing(false){}
 
 extern "C" BaseModule* create() {
     return new BaseModule();
@@ -23,18 +23,34 @@ std::string BaseModule::getVersion() {
 }
 
 std::string BaseModule::getName() {
-    return "BaseModule";
+    return name;
 }
 
 std::string BaseModule::getDescription() {
-    return "The BaseModule on which everything is based on.";
+    return description;
 }
 
 uint8_t BaseModule::getType() {
-    return ModuleTypes::UI;
+    return type;
 }
 
-bool BaseModule::work() {
+bool BaseModule::work(const context& ctx) {
     return false;
+}
+
+bool BaseModule::isSharing() {
+    return sharing;
+}
+
+shareMap BaseModule::getShareMap() {
+    return shareMap();
+}
+
+bool BaseModule::isVisible() const {
+    return visible;
+}
+
+void BaseModule::setVisible(bool value) {
+    visible = value;
 }
 
