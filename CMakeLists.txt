@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(pui)
 
-option(TESTS "Enable tests")
+option(TESTS "Build tests")
+option(MODULES "Build modules")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fpermissive")
@@ -17,10 +18,14 @@ file(GLOB HEADERS ext/*.h)
 add_executable(pui main.cpp ${SRCS} ${HEADERS})
 
 target_link_libraries(pui
-        raylib dl)
+        raylib dl pthread)
 
 if(TESTS)
-    include(tests)
+    include(tests/CMakeLists.txt)
+endif()
+
+if(MODULES)
+    include(modules/CMakeLists.txt)
 endif()
 
 unset(CMAKE_SYSROOT CACHE)
