@@ -8,34 +8,33 @@
 #define SCREEN_WIDTH 720
 #define SCREEN_HEIGHT 1440
 #define FRAME_RATE 60
+#define MODULE_DIRECTORY "/var/pui/modules/"
 
 #include <raylib.h>
 
 #include <fplus.h>
+#include <args.h>
 
 #include <ModuleManager/ModuleManager.h>
 
 class Manager {
 public:
-    explicit Manager(char **argv);
-
-    void parseArguments(char **argv);
+    explicit Manager(int argc, char **argv);
     void parseConfiguration(const std::string& path);
 
     void run();
     void work();
-
-    static void printHelp();
-
-protected:
-    static std::string getNextArgOrExit(char** argv, int currentIndex);
-
+    void saveState();
 private:
-    std::string configPath;
+    args::ArgumentParser parser;
+    args::HelpFlag help;
+    args::ValueFlag<std::string> configFile;
+    args::ValueFlag<int> screenHeight;
+    args::ValueFlag<int> screenWidth;
+    args::ValueFlag<int> frameRate;
+    args::ValueFlag<std::string> moduleDirectory;
 
-    int screenHeight = SCREEN_HEIGHT;
-    int screenWidth = SCREEN_WIDTH;
-    int frameRate = FRAME_RATE;
+    ModuleManager *moduleManager;
 };
 
 
