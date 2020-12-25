@@ -4,7 +4,7 @@ project(pui)
 option(TESTS "Build tests")
 option(MODULES "Build modules")
 option(DEBUG "Debug build" ON)
-option(PINEPHONE "Build for Pinephone" ON)
+option(PINEPHONE "Build for Pinephone" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS "-fpermissive")
