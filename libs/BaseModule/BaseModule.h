@@ -33,8 +33,8 @@ protected:
     std::string description;
     std::string version;
 
-    Shortcut *shortcut = nullptr;
-    Widget *widget = nullptr;
+    std::shared_ptr<Shortcut> shortcut;
+    std::shared_ptr<Widget> widget;
 
 public:
     BaseModule();
@@ -105,9 +105,9 @@ public:
      */
     bool hasWidget();
 
-    Widget* getWidget();
+    std::shared_ptr<Widget> getWidget();
 
-    Shortcut* getShortcut();
+    std::shared_ptr<Shortcut> getShortcut();
 };
 
 extern "C" BaseModule* create();

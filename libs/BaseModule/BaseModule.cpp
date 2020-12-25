@@ -4,14 +4,14 @@
 
 #include "BaseModule.h"
 
-BaseModule::BaseModule(): type(UI), sharing(false){}
+BaseModule::BaseModule(): type(UI), sharing(false) {}
 
 extern "C" BaseModule* create() {
     return new BaseModule();
 }
 
 std::string BaseModule::getVersion() {
-    return "0";
+    return version;
 }
 
 std::string BaseModule::getName() {
@@ -51,13 +51,13 @@ bool BaseModule::hasShortcut() {
 }
 
 bool BaseModule::hasWidget() {
-    return widget == nullptr;
+    return widget != nullptr;
 }
 
-Widget *BaseModule::getWidget() {
+std::shared_ptr<Widget> BaseModule::getWidget() {
     return widget;
 }
 
-Shortcut *BaseModule::getShortcut() {
+std::shared_ptr<Shortcut> BaseModule::getShortcut() {
     return shortcut;
 }
