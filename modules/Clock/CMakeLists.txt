@@ -1,2 +1,5 @@
 project(Clock)
-add_library(Clock Clock.h)
+set(CMAKE_CXX_STANDARD 17)
+add_library(Clock SHARED ${MODULE_DIR}/Clock/Clock.h ${HEADERS})
+set_target_properties(Clock PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(Clock raylib)
