@@ -14,7 +14,12 @@ screenHeight(parser, "int", "screen height", {"sh", "screen-height"}, SCREEN_HEI
 screenWidth(parser, "int", "screen width", {"sw", "screen-width"}, SCREEN_WIDTH),
 frameRate(parser, "int", "frame rate", {"fr", "frame-rate"}, FRAME_RATE),
 moduleDirectory(parser, "string", "dir where all the modules live", {"md", "module-directory"}, MODULE_DIRECTORY),
-logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY)
+logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY),
+systemButtonGroup(HButtonGroup(Vector2 {(float) SCREEN_WIDTH / 2, (float) SCREEN_HEIGHT - (float) SYSTEM_BUTTON_HEIGHT / 2},Vector2 {SCREEN_WIDTH, SYSTEM_BUTTON_HEIGHT},{
+    Button(Utils::getIcon(RICON_ARROW_LEFT_FILL, ""), SYSTEM_BUTTON_SIZE, systemButtonBackCallback, this, SYSTEM_BUTTON_OUTLINE),
+    Button(Utils::getIcon(RICON_HOUSE, ""), SYSTEM_BUTTON_SIZE, systemButtonHomeCallback, this, SYSTEM_BUTTON_OUTLINE),
+    Button(Utils::getIcon(RICON_LAYERS, ""), SYSTEM_BUTTON_SIZE, systemButtonOtherCallback, this, SYSTEM_BUTTON_OUTLINE)
+}, SYSTEM_BUTTON_PADDING))
 {
     try {
         parser.ParseCLI(argc, argv);
@@ -41,13 +46,13 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
 
     loguru::add_file(logDir.c_str(), loguru::Append, loguru::Verbosity_INFO);
 
-    moduleManager = new ModuleManager(moduleDirectory.Get());
+    moduleManager = ModuleManager(moduleDirectory.Get());
 
-    LOG_F(INFO, "Available modules in %s:", moduleManager->getModuleDirectory().c_str());
-    for(const auto& m : moduleManager->getLoadableModules()) LOG_F(INFO, "\t%s", m.c_str());
+    LOG_F(INFO, "Available modules in %s:", moduleManager.getModuleDirectory().c_str());
+    for(const auto& m : moduleManager.getLoadableModules()) LOG_F(INFO, "\t%s", m.c_str());
 
     LOG_F(INFO, "Loading all modules.");
-    moduleManager->loadAllModules();
+    moduleManager.loadAllModules();
 }
 
 void Manager::run() {
@@ -73,16 +78,15 @@ void Manager::run() {
     CloseWindow();
 
     LOG_F(INFO, "Unloading modules.");
-    moduleManager->unloadAllModules();
+    moduleManager.unloadAllModules();
 }
 
 // 3d ui? like a spinnable sphere with clickable boxes
 
 // overview of all modules and where they are so they can be resized
 void Manager::work() {
-    moduleManager->work(moduleManager->accumulateContext());
-
-    // for(uiState.widgets)
+    systemButtonGroup.work();
+    systemButtonGroup.draw();
 }
 
 void Manager::parseConfiguration(const std::string &path) {
@@ -91,4 +95,19 @@ void Manager::parseConfiguration(const std::string &path) {
 
 void Manager::saveState() {
     // todo
+}
+
+void Manager::systemButtonBackCallback(void *ctx) {
+    auto *mgr = (Manager*) ctx; // todo
+    LOG_F(INFO, "systemButtonBackCallback");
+}
+
+void Manager::systemButtonHomeCallback(void *ctx) {
+    auto *mgr = (Manager*) ctx; // todo
+    LOG_F(INFO, "systemButtonHomeCallback");
+}
+
+void Manager::systemButtonOtherCallback(void *ctx) {
+    auto *mgr = (Manager*) ctx; // todo
+    LOG_F(INFO, "systemButtonOtherCallback");
 }

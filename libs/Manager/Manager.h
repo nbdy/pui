@@ -5,25 +5,20 @@
 #ifndef PUI_MANAGER_H
 #define PUI_MANAGER_H
 
-#define SCREEN_WIDTH 720
-#define SCREEN_HEIGHT 1440
-#define FRAME_RATE 60
-
-#ifdef DEBUG
-#define LOG_DIRECTORY "./log/"
-#define MODULE_DIRECTORY "./"
-#else
-#define LOG_DIRECTORY "/var/pui/log/"
-#define MODULE_DIRECTORY "/var/pui/modules/"
-#endif
-
 #include <raylib.h>
 
 #include <fplus.h>
 #include <args.h>
 #include <loguru/loguru.hpp>
 
+#include <ButtonGroup/ButtonGroup.h>
 #include <ModuleManager/ModuleManager.h>
+
+#define SYSTEM_BUTTON_OUTLINE 2
+#define SYSTEM_BUTTON_PADDING 4
+#define SYSTEM_BUTTON_HEIGHT 42
+#define SYSTEM_BUTTON_WIDTH (float) (SCREEN_WIDTH - (float) SYSTEM_BUTTON_PADDING * 3) / 3
+#define SYSTEM_BUTTON_SIZE Vector2 {SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT}
 
 class Manager {
 public:
@@ -33,6 +28,7 @@ public:
     void run();
     void work();
     void saveState();
+
 private:
     args::ArgumentParser parser;
     args::HelpFlag help;
@@ -43,7 +39,13 @@ private:
     args::ValueFlag<std::string> moduleDirectory;
     args::ValueFlag<std::string> logDirectory;
 
-    ModuleManager *moduleManager;
+    ModuleManager moduleManager;
+
+    HButtonGroup systemButtonGroup;
+
+    static void systemButtonBackCallback(void* ctx);
+    static void systemButtonHomeCallback(void* ctx);
+    static void systemButtonOtherCallback(void* ctx);
 };
 
 
