@@ -5,55 +5,66 @@
 #ifndef PUI_WIDGET_H
 #define PUI_WIDGET_H
 
-#include <chrono>
+#include <ctime>
 
 #include <raylib.h>
 
-#include <json.h>
+#include <Utils/Utils.h>
 
-#define NOW std::chrono::system_clock::now
+#define NOT_CLICKED Vector2 {-1, -1}
 
-typedef std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds> msecTimePoint;
 typedef void (*callbackFunction)();
 
-using json = nlohmann::json;
+// todo saving
+struct WidgetState {
+    Vector2 center = Vector2 {(float) SCREEN_HEIGHT / 2, (float) SCREEN_WIDTH / 2};
+    Vector2 size = Vector2 { 0.0, 0.0};
 
-namespace pui {
-    struct WidgetState {
-        Vector2 topLeft;
-        Vector2 bottomRight;
-        bool enabled;
-        int onLongClickThreshold;
-    };
-}
+    bool mousePressed = false;
+
+    Vector2 clicked() {
+        bool _mouseDown = IsMouseButtonPressed(MOUSE_LEFT_BUTTON);
+        if(mousePressed != _mouseDown) {
+            mousePressed = !mousePressed;
+            auto mp = GetMousePosition();
+            if((mp.x <= center.x - size.x / 2 && mp.x >= center.x + size.x) && (mp.y <= center.y - size.y / 2 && mp.y >= center.y + size.y)) return mp;
+        }
+        return NOT_CLICKED;
+    }
+
+    bool enabled = false;
+    int onLongClickThreshold = 500;
+};
 
 class Widget {
 protected:
-    pui::WidgetState state;
+    WidgetState state;
 
-    bool clicked;
-    msecTimePoint *clickedTimePoint = nullptr;
+    bool clicked = false;
+    time_t clickedTimePoint = -1;
 
     callbackFunction onClicked;
     callbackFunction onLongClicked;
 
 public:
     Widget();
+    /* todo
     explicit Widget(const json& state);
     Widget(const json& state, callbackFunction onClicked);
     Widget(const json& state, callbackFunction onClicked, callbackFunction onLongClicked);
+    */
+    Widget(callbackFunction onClicked, callbackFunction onLongClicked);
     Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked);
     Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked, callbackFunction onLongClicked);
-    Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked, callbackFunction onLongClicked, int onLongClickThreshold);
-    Widget(Vector2 topLeft, int height, int width, callbackFunction onClicked);
-    Widget(Vector2 topLeft, int height, int width, callbackFunction onClicked, callbackFunction onLongClicked);
+    Widget(Vector2 topLeft, float height, float width, callbackFunction onClicked);
+    Widget(Vector2 topLeft, float height, float width, callbackFunction onClicked, callbackFunction onLongClicked);
 
     void work();
-    virtual bool wasClicked();
+    virtual void wasClicked();
     virtual void draw();
 
-    pui::WidgetState getState();
-    json getStateJson();
+    WidgetState getState();
+    // json getStateJson(); // todo
 
     [[nodiscard]] bool mouseOnWidget() const;
 

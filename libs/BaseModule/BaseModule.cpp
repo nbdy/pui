@@ -10,14 +10,6 @@ extern "C" BaseModule* create() {
     return new BaseModule();
 }
 
-bool BaseModule::drawWidget(int x, int y) {
-    return false;
-}
-
-void BaseModule::drawModule() {
-
-}
-
 std::string BaseModule::getVersion() {
     return "0";
 }
@@ -54,3 +46,18 @@ void BaseModule::setVisible(bool value) {
     visible = value;
 }
 
+bool BaseModule::hasShortcut() {
+    return shortcut == nullptr;
+}
+
+bool BaseModule::hasWidget() {
+    return widget == nullptr;
+}
+
+Widget *BaseModule::getWidget() {
+    return widget;
+}
+
+Shortcut *BaseModule::getShortcut() {
+    return shortcut;
+}

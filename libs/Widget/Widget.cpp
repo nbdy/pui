@@ -6,53 +6,58 @@
 
 Widget::Widget() {}
 
-Widget::Widget(const json& state): state(state.get<pui::WidgetState>()) {}
+/*
+Widget::Widget(json state) {
+    state.get<WidgetState>();
+}
 
-Widget::Widget(const json &state, callbackFunction onClicked, callbackFunction onLongClicked): state(state.get<pui::WidgetState>()), onClicked(onClicked), onLongClicked(onLongClicked) {}
+Widget::Widget(const json &state, callbackFunction onClicked, callbackFunction onLongClicked): state(state.get<WidgetState>()), onClicked(onClicked), onLongClicked(onLongClicked) {}
 
-Widget::Widget(const json &state, callbackFunction onClicked): state(state.get<pui::WidgetState>()), onClicked(onClicked) {}
+Widget::Widget(const json &state, callbackFunction onClicked): state(state.get<WidgetState>()), onClicked(onClicked) {}
+*/
 
-Widget::Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked):
-topLeft(topLeft), bottomRight(bottomRight), onClicked(onClicked){}
+Widget::Widget(callbackFunction onClicked, callbackFunction onLongClicked): state(WidgetState {
+    Vector2 {0, 0},
+    Vector2 {50, 50},
+    false,
+    false
+}), onClicked(onClicked), onLongClicked(onLongClicked) {
 
-Widget::Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked, callbackFunction onLongClicked):
-topLeft(topLeft), bottomRight(bottomRight), onClicked(onClicked), onLongClicked(onLongClicked){}
+}
 
-Widget::Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked, callbackFunction onLongClicked, int onLongClickThreshold):
-               topLeft(topLeft), bottomRight(bottomRight), onClicked(onClicked), onLongClicked(onLongClicked), onLongClickThreshold(onLongClickThreshold){}
+Widget::Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked): state(WidgetState {
+    topLeft, bottomRight, false, false
+}), onClicked(onClicked){}
 
-Widget::Widget(Vector2 topLeft, int height, int width, callbackFunction onClicked):
-topLeft(topLeft), bottomRight(Vector2 {topLeft.x + height, topLeft.y + width}), onClicked(onClicked) {}
+Widget::Widget(Vector2 topLeft, Vector2 bottomRight, callbackFunction onClicked, callbackFunction onLongClicked): state(WidgetState {
+    topLeft, bottomRight, false, false
+}), onClicked(onClicked), onLongClicked(onLongClicked){}
 
-Widget::Widget(Vector2 topLeft, int height, int width, callbackFunction onClicked, callbackFunction onLongClicked):
-topLeft(topLeft), bottomRight(Vector2 {topLeft.x + height, topLeft.y + width}), onClicked(onClicked), onLongClicked(onLongClicked) {}
+Widget::Widget(Vector2 topLeft, float height, float width, callbackFunction onClicked): state(WidgetState {
+    topLeft, Vector2 {topLeft.x + height, topLeft.y + width},
+}), onClicked(onClicked) {}
+
+Widget::Widget(Vector2 topLeft, float height, float width, callbackFunction onClicked, callbackFunction onLongClicked): state(WidgetState {
+    topLeft, Vector2 {topLeft.x + height, topLeft.y + width}
+}), onClicked(onClicked), onLongClicked(onLongClicked) {}
 
 void Widget::work() {
-    if(enabled) {
+    if(state.enabled) {
         wasClicked();
         draw();
     }
 }
 
-bool Widget::wasClicked() {
+void Widget::wasClicked() {
     if(!mouseOnWidget()) return;
 
-    if(clickedTimePoint == nullptr) {
-        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-            clickedTimePoint = NOW();
-        }
+    if(clickedTimePoint != -1) {
+        if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) clickedTimePoint = std::time(nullptr);
     } else {
-        auto clickedDuration = NOW() - clickedDuration;
-        if(clickedDuration >= state.onLongClickThreshold) {
-            onLongClicked();
-            clickedTimePoint = nullptr;
-            return;
-        }
-
-        if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-            onClicked();
-            clickedTimePoint = nullptr;
-        }
+        auto clickedDuration = std::time(nullptr) - clickedTimePoint;
+        if(clickedDuration >= state.onLongClickThreshold) onLongClicked();
+        else if(IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) onClicked();
+        clickedTimePoint = -1;
     }
 }
 
@@ -60,17 +65,21 @@ void Widget::draw() {
 
 }
 
-bool Widget::mouseOnWidget() const {
-    auto mp = GetMousePosition();
-    return (mp.x > state.topLeft.x && mp.x < state.bottomRight.x && mp.y > state.topLeft.y && mp.y < state.bottomRight.y);
-}
-
-pui::WidgetState Widget::getState() {
+WidgetState Widget::getState() {
     return state;
 }
 
+bool Widget::mouseOnWidget() const {
+    auto mp = GetMousePosition();
+    auto hy = state.size.y / 2;
+    auto hx = state.size.x / 2;
+    return (mp.x <= state.center.x - hx  && mp.x >= state.center.x + hx) && (mp.y <= state.center.y - hy && mp.y >= state.center.y + hy);
+}
+
+/*
 json Widget::getStateJson() {
     return state;
 }
+*/
 
 Widget::~Widget() = default;

@@ -22,9 +22,25 @@ class ModuleManager {
     moduleMap loadedModules;
 
 public:
+    /*!
+     * initializes the module manager with the given path
+     * @param path
+     */
     explicit ModuleManager(const std::string& path);
 
     ~ModuleManager();
+
+    /*!
+     * get all loadable module names
+     * @return
+     */
+    strVec getLoadableModules();
+
+    /*!
+     * returns all currently loaded modules
+     * @return
+     */
+     std::vector<BaseModule*> getLoadedModules();
 
     /*!
      * loads all available modules

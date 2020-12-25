@@ -5,14 +5,19 @@
 #ifndef PUI_CLOCK_H
 #define PUI_CLOCK_H
 
-#include <Widget/Widget.h>
+#include <Shortcut/Shortcut.h>
 #include <BaseModule/BaseModule.h>
 
 class ClockWidget : public Widget {
 public:
     ClockWidget(callbackFunction onClicked, callbackFunction onLongClicked):
-    topLeft(Vector2{0, 0}), bottomRight(Vector2{50, 100}), onClicked(onClicked), onLongClicked(onLongClicked),
-    {}
+    Widget(onClicked, onLongClicked) {}
+};
+
+class ClockShortcut : public Shortcut {
+public:
+    ClockShortcut(callbackFunction onClicked, callbackFunction onLongClicked):
+    Shortcut(GuiIconText(RICON_CLOCK, "Clock"), Vector2 {0, 0}, onClicked, onLongClicked){}
 };
 
 class Clock : public BaseModule {
@@ -25,10 +30,19 @@ protected:
         // todo make widget slightly jiggly and move/resizeable
     }
 
-public:
-    Clock(): type(UI), sharing(false), version("0.1"), description("Simple clock with widget"), name("Clock"), widget(new ClockWidget(onWidgetClicked, onWidgetLongClicked)) {
+    virtual void onShortcutClicked() {
 
     }
+
+    virtual void onShortcutLongClicked() {
+
+    }
+
+public:
+    Clock():
+    type(UI), sharing(false), version("0.1"), description("Simple clock with widget"), name("Clock"),
+    widget(new ClockWidget(onWidgetClicked, onWidgetLongClicked)),
+    shortcut(new ClockShortcut(onShortcutClicked, onShortcutLongClicked)){}
 
     bool work(const context &ctx) override {
 

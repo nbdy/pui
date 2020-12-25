@@ -8,12 +8,20 @@
 #define SCREEN_WIDTH 720
 #define SCREEN_HEIGHT 1440
 #define FRAME_RATE 60
+
+#ifdef DEBUG
+#define LOG_DIRECTORY "./log/"
+#define MODULE_DIRECTORY "./"
+#else
+#define LOG_DIRECTORY "/var/pui/log/"
 #define MODULE_DIRECTORY "/var/pui/modules/"
+#endif
 
 #include <raylib.h>
 
 #include <fplus.h>
 #include <args.h>
+#include <loguru/loguru.hpp>
 
 #include <ModuleManager/ModuleManager.h>
 
@@ -33,6 +41,7 @@ private:
     args::ValueFlag<int> screenWidth;
     args::ValueFlag<int> frameRate;
     args::ValueFlag<std::string> moduleDirectory;
+    args::ValueFlag<std::string> logDirectory;
 
     ModuleManager *moduleManager;
 };

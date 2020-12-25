@@ -11,7 +11,7 @@
 
 #include <raylib.h>
 
-#include <Widget/Widget.h>
+#include <Shortcut/Shortcut.h>
 
 typedef std::map<std::string, std::any> shareMap;
 typedef std::map<std::string, shareMap> context;
@@ -19,6 +19,8 @@ typedef std::map<std::string, shareMap> context;
 enum ModuleTypes {
     UI = 0, BACKGROUND = 1
 };
+
+class Shortcut;
 
 class BaseModule {
 protected:
@@ -31,7 +33,8 @@ protected:
     std::string description;
     std::string version;
 
-    Widget *widget;
+    Shortcut *shortcut = nullptr;
+    Widget *widget = nullptr;
 
 public:
     BaseModule();
@@ -41,19 +44,6 @@ public:
      * @return false if something is wrong and the module should be stopped
      */
     virtual bool work(const context& ctx);
-
-    /*!
-     * draw a widget representation of the module
-     * @param x
-     * @param y
-     * @return true if the widget was clicked
-     */
-    virtual bool drawWidget(int x, int y);
-
-    /*!
-     * draw the module itself
-     */
-    virtual void drawModule();
 
     /*!
      * get a string representation of the module version
@@ -79,12 +69,45 @@ public:
      */
     virtual uint8_t getType();
 
+    /*!
+     * does the module share its data
+     * @return
+     */
     virtual bool isSharing();
 
+    /*!
+     * get the modules shared data
+     * @return
+     */
     virtual shareMap getShareMap();
 
-    bool isVisible() const;
+    /*!
+     * is the module visible
+     * @return
+     */
+    [[nodiscard]] bool isVisible() const;
+
+    /*!
+     * set if module is visible
+     * @param value
+     */
     void setVisible(bool value);
+
+    /*!
+     * can the module provide a shortcut
+     * @return
+     */
+    bool hasShortcut();
+
+    /*!
+     * can the module provide a widget
+     * @return
+     */
+    bool hasWidget();
+
+    Widget* getWidget();
+
+    Shortcut* getShortcut();
 };
 
 extern "C" BaseModule* create();

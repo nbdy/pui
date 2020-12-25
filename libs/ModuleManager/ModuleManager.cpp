@@ -11,7 +11,7 @@ ModuleManager::ModuleManager(const std::string &path) {
 
 std::vector<std::string> ModuleManager::listModules(std::string path) {
     if(!fplus::is_suffix_of(std::string("/"), path)) path += "/";
-    return fplus::keep_if([](const std::string& v) {return fplus::is_suffix_of(v, std::string(".so"));}, Utils::listDirectory(path));
+    return fplus::keep_if([](const std::string& v) {return fplus::is_suffix_of(std::string(".so"), v);}, Utils::listDirectory(path));
 }
 
 BaseModule *ModuleManager::createModule(const std::string &path) {
@@ -74,6 +74,14 @@ void ModuleManager::drawModules() {
     for(auto& lm : loadedModules) {
         if(lm.second->isVisible()) return; // dont draw modules on top of each other
     }
+}
+
+strVec ModuleManager::getLoadableModules() {
+    return loadableModules;
+}
+
+std::vector<BaseModule*> ModuleManager::getLoadedModules() {
+    return fplus::get_map_values(loadedModules);
 }
 
 ModuleManager::~ModuleManager() = default;
