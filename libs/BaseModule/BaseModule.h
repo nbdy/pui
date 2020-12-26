@@ -9,8 +9,6 @@
 #include <map>
 #include <string>
 
-#include <raylib.h>
-
 #include <Shortcut/Shortcut.h>
 
 typedef std::map<std::string, std::any> shareMap;

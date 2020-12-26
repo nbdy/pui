@@ -7,8 +7,6 @@
 
 #include <ctime>
 
-#include <raylib.h>
-
 #include <Utils/Utils.h>
 
 #define NOT_CLICKED Vector2 {-1, -1}

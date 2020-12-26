@@ -286,10 +286,9 @@ typedef enum {
     RICON_254                      = 254,
     RICON_255                      = 255,
 } guiIconName;
-
 #endif  // RICONS_H
 
-#if defined(RICONS_IMPLEMENTATION)
+#ifdef RICONS_IMPLEMENTATION
 //----------------------------------------------------------------------------------
 // Icons data (allocated on memory data section by default)
 // NOTE: A new icon set could be loaded over this array using GuiLoadIcons(),

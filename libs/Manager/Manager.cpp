@@ -14,12 +14,7 @@ screenHeight(parser, "int", "screen height", {"sh", "screen-height"}, SCREEN_HEI
 screenWidth(parser, "int", "screen width", {"sw", "screen-width"}, SCREEN_WIDTH),
 frameRate(parser, "int", "frame rate", {"fr", "frame-rate"}, FRAME_RATE),
 moduleDirectory(parser, "string", "dir where all the modules live", {"md", "module-directory"}, MODULE_DIRECTORY),
-logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY),
-systemButtonGroup(HButtonGroup(Vector2 {(float) SCREEN_WIDTH / 2, (float) SCREEN_HEIGHT - (float) SYSTEM_BUTTON_HEIGHT / 2},Vector2 {SCREEN_WIDTH, SYSTEM_BUTTON_HEIGHT},{
-    Button(Utils::getIcon(RICON_ARROW_LEFT_FILL, ""), SYSTEM_BUTTON_SIZE, systemButtonBackCallback, this, SYSTEM_BUTTON_OUTLINE),
-    Button(Utils::getIcon(RICON_HOUSE, ""), SYSTEM_BUTTON_SIZE, systemButtonHomeCallback, this, SYSTEM_BUTTON_OUTLINE),
-    Button(Utils::getIcon(RICON_LAYERS, ""), SYSTEM_BUTTON_SIZE, systemButtonOtherCallback, this, SYSTEM_BUTTON_OUTLINE)
-}, SYSTEM_BUTTON_PADDING))
+logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY)
 {
     try {
         parser.ParseCLI(argc, argv);
@@ -66,7 +61,7 @@ void Manager::run() {
         BeginDrawing();
         ClearBackground(BLACK);
 
-        work();
+        loop();
 
         EndDrawing();
     }
@@ -81,12 +76,15 @@ void Manager::run() {
     moduleManager.unloadAllModules();
 }
 
-// 3d ui? like a spinnable sphere with clickable boxes
+void Manager::loop() {
 
-// overview of all modules and where they are so they can be resized
-void Manager::work() {
-    systemButtonGroup.work();
-    systemButtonGroup.draw();
+
+    if(GuiButton(Rectangle {0, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
+                 GuiIconText(RICON_ARROW_LEFT_FILL, nullptr))) backButtonClicked();
+    if(GuiButton(Rectangle {SCREEN_WIDTH / 2 - SYSTEM_BUTTON_WIDTH / 2, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
+                 GuiIconText(RICON_HOUSE, nullptr))) homeButtonClicked();
+    if(GuiButton(Rectangle {SCREEN_WIDTH - SYSTEM_BUTTON_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
+                 GuiIconText(RICON_LAYERS, nullptr))) otherButtonClicked();
 }
 
 void Manager::parseConfiguration(const std::string &path) {
@@ -97,17 +95,14 @@ void Manager::saveState() {
     // todo
 }
 
-void Manager::systemButtonBackCallback(void *ctx) {
-    auto *mgr = (Manager*) ctx; // todo
-    LOG_F(INFO, "systemButtonBackCallback");
+void Manager::backButtonClicked() {
+    LOG_F(INFO, "backButtonClicked");
 }
 
-void Manager::systemButtonHomeCallback(void *ctx) {
-    auto *mgr = (Manager*) ctx; // todo
-    LOG_F(INFO, "systemButtonHomeCallback");
+void Manager::homeButtonClicked() {
+
 }
 
-void Manager::systemButtonOtherCallback(void *ctx) {
-    auto *mgr = (Manager*) ctx; // todo
-    LOG_F(INFO, "systemButtonOtherCallback");
+void Manager::otherButtonClicked() {
+
 }

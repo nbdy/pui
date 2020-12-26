@@ -10,9 +10,10 @@
 #include <dirent.h>
 
 #define RAYGUI_SUPPORT_ICONS
-#include <ricons.h>
+#include <raygui.h>
 
 #include <fplus.h>
+#include <ricons.h>
 
 #ifdef PINEPHONE
 #define SCREEN_WIDTH 720
@@ -48,7 +49,7 @@ public:
     static std::vector<std::string> listDirectory(const std::string& path);
     static std::string getTimestamp(const std::string& format=TIMESTAMP_FORMAT_LOG);
 
-    static const char* getIcon(guiIconName icon, const char* text);
+    static const char* getIcon(guiIconName icon, const char* text = nullptr);
 };
 
 

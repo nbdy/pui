@@ -8,11 +8,6 @@
 #include <Widget/Widget.h>
 #include <BaseModule/BaseModule.h>
 
-#include <raylib.h>
-
-#define RICONS_IMPLEMENTATION
-#include <ricons.h>
-
 class Shortcut : public Widget {
 protected:
     const char* icon;
