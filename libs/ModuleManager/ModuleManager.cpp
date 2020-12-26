@@ -4,6 +4,8 @@
 
 #include "ModuleManager.h"
 
+ModuleManager::ModuleManager() {}
+
 ModuleManager::ModuleManager(const std::string &path) {
     moduleDirectory = path;
     loadableModules = listModules(path);

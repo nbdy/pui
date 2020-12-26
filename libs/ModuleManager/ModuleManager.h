@@ -22,6 +22,8 @@ class ModuleManager {
     moduleMap loadedModules;
 
 public:
+    ModuleManager();
+
     /*!
      * initializes the module manager with the given path
      * @param path
