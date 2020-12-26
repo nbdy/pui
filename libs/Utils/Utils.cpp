@@ -4,6 +4,8 @@
 
 #include "Utils.h"
 
+Utils::Utils() = default;
+
 std::vector<std::string> Utils::listDirectory(const std::string &path) {
     std::vector<std::string> r;
     DIR *d;
@@ -23,5 +25,18 @@ std::string Utils::getTimestamp(const std::string &format) {
     return b;
 }
 
-Utils::Utils() = default;
+const char *Utils::getIcon(guiIconName icon, const char* text) {
+    static char buffer[1024] = { 0 };
+    memset(buffer, 0, 1024);
 
+    sprintf(buffer, "#%03i#", icon);
+
+    if (text != nullptr){
+        for (int i = 5; i < 1024; i++){
+            buffer[i] = text[i - 5];
+            if (text[i - 5] == '\0') break;
+        }
+    }
+
+    return buffer;
+}
