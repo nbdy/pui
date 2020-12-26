@@ -11,7 +11,7 @@
 #include <raylib.h>
 
 #define RICONS_IMPLEMENTATION
-#include <raygui/ricons.h>
+#include <ricons.h>
 
 class Shortcut : public Widget {
 protected:
@@ -24,8 +24,6 @@ public:
     Shortcut(const char* icon, Vector2 topLeft, callbackFunction onClicked, callbackFunction onLongClicked);
 
     virtual void draw() override;
-
-    static const char *GuiIconText(int iconId, const char *text);
 };
 
 
