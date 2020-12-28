@@ -76,7 +76,7 @@ public:
      * calls work() on all modules
      * @param ctx
      */
-    void work(const context& ctx);
+    void work(void* data, const context& ctx);
 
     /*!
      * calls draw() on all modules

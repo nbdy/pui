@@ -4,7 +4,13 @@
 
 #include "BaseModule.h"
 
-BaseModule::BaseModule(): type(UI), sharing(false) {}
+#include <utility>
+
+BaseModule::BaseModule(): type(UI), sharing(false), shortcut() {}
+
+BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, Texture2D shortcut, ModuleTypes type, bool sharing):
+name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(shortcut), type(type), sharing(sharing){}
+
 
 extern "C" BaseModule* create() {
     return new BaseModule();
@@ -26,8 +32,12 @@ uint8_t BaseModule::getType() {
     return type;
 }
 
-bool BaseModule::work(const context& ctx) {
+bool BaseModule::work(void* data, const context& ctx) {
     return false;
+}
+
+void BaseModule::loop(void *data) {
+
 }
 
 bool BaseModule::isSharing() {
@@ -46,18 +56,7 @@ void BaseModule::setVisible(bool value) {
     visible = value;
 }
 
-bool BaseModule::hasShortcut() {
-    return shortcut == nullptr;
+bool BaseModule::shortcutClicked(Rectangle bounds, const char* text) {
+    return GuiImageButton(bounds, text, shortcut);
 }
 
-bool BaseModule::hasWidget() {
-    return widget != nullptr;
-}
-
-std::shared_ptr<Widget> BaseModule::getWidget() {
-    return widget;
-}
-
-std::shared_ptr<Shortcut> BaseModule::getShortcut() {
-    return shortcut;
-}

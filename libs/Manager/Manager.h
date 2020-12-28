@@ -8,12 +8,15 @@
 #include <fplus.h>
 #include <args.h>
 #include <loguru/loguru.hpp>
+#include <taskflow/taskflow.hpp>
 
+#include <GridView/GridView.h>
 #include <ModuleManager/ModuleManager.h>
 
 #define SYSTEM_BUTTON_PADDING 2
 #define SYSTEM_BUTTON_HEIGHT 42
 #define SYSTEM_BUTTON_WIDTH (float) (SCREEN_WIDTH - (float) SYSTEM_BUTTON_PADDING * 3) / 3
+
 
 class Manager {
 public:
@@ -21,12 +24,15 @@ public:
     void parseConfiguration(const std::string& path);
 
     void run();
+    void work();
     void loop();
     void saveState();
 
     virtual void backButtonClicked();
     virtual void homeButtonClicked();
     virtual void otherButtonClicked();
+
+    void setCurrentModule(BaseModule* module);
 
 private:
     args::ArgumentParser parser;
@@ -39,6 +45,12 @@ private:
     args::ValueFlag<std::string> logDirectory;
 
     ModuleManager moduleManager;
+
+    GridView<Manager> allModules;
+    BaseModule* currentModule = nullptr;
+
+    tf::Executor executor;
+    tf::Taskflow taskflow;
 };
 
 

@@ -24,7 +24,3 @@ std::string Utils::getTimestamp(const std::string &format) {
     strftime(b, sizeof(b), format.c_str(), &t);
     return b;
 }
-
-const char *Utils::getIcon(guiIconName icon, const char* text) {
-    return GuiIconText(icon, text);
-}

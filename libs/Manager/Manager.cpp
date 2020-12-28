@@ -48,6 +48,8 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
 
     LOG_F(INFO, "Loading all modules.");
     moduleManager.loadAllModules();
+
+    allModules = GridView<Manager>(Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, moduleManager.getLoadedModules());
 }
 
 void Manager::run() {
@@ -76,8 +78,18 @@ void Manager::run() {
     moduleManager.unloadAllModules();
 }
 
-void Manager::loop() {
+void Manager::work() {
+    auto ctx = moduleManager.accumulateContext();
+    for(auto& m : moduleManager.getLoadedModules()) {
+        taskflow.emplace([this, ctx, m](){m->work(this, ctx);});
+    }
+    executor.run(taskflow).wait();
+    taskflow.clear();
+}
 
+void Manager::loop() {
+    if(currentModule != nullptr) currentModule->loop(this);
+    else allModules.loop(this);
 
     if(GuiButton(Rectangle {0, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
                  GuiIconText(RICON_ARROW_LEFT_FILL, nullptr))) backButtonClicked();
@@ -105,4 +117,8 @@ void Manager::homeButtonClicked() {
 
 void Manager::otherButtonClicked() {
 
+}
+
+void Manager::setCurrentModule(BaseModule *module) {
+    currentModule = module;
 }

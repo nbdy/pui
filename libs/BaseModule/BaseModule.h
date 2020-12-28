@@ -9,7 +9,8 @@
 #include <map>
 #include <string>
 
-#include <Shortcut/Shortcut.h>
+#include <raylib.h>
+#include <Utils/Utils.h>
 
 typedef std::map<std::string, std::any> shareMap;
 typedef std::map<std::string, shareMap> context;
@@ -31,17 +32,19 @@ protected:
     std::string description;
     std::string version;
 
-    std::shared_ptr<Shortcut> shortcut;
-    std::shared_ptr<Widget> widget;
+    Texture2D shortcut;
 
 public:
     BaseModule();
+    BaseModule(std::string  name, std::string  description, std::string  version, Texture2D shortcut, ModuleTypes type, bool sharing);
 
     /*!
      * call this in the managers work function
      * @return false if something is wrong and the module should be stopped
      */
-    virtual bool work(const context& ctx);
+    virtual bool work(void* data, const context& ctx);
+
+    virtual void loop(void* data);
 
     /*!
      * get a string representation of the module version
@@ -91,21 +94,7 @@ public:
      */
     void setVisible(bool value);
 
-    /*!
-     * can the module provide a shortcut
-     * @return
-     */
-    bool hasShortcut();
-
-    /*!
-     * can the module provide a widget
-     * @return
-     */
-    bool hasWidget();
-
-    std::shared_ptr<Widget> getWidget();
-
-    std::shared_ptr<Shortcut> getShortcut();
+    virtual bool shortcutClicked(Rectangle bounds, const char* text);
 };
 
 extern "C" BaseModule* create();

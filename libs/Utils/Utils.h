@@ -48,8 +48,6 @@ public:
 
     static std::vector<std::string> listDirectory(const std::string& path);
     static std::string getTimestamp(const std::string& format=TIMESTAMP_FORMAT_LOG);
-
-    static const char* getIcon(guiIconName icon, const char* text = nullptr);
 };
 
 
