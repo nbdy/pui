@@ -41,8 +41,8 @@ protected:
 public:
     Clock():
     type(UI), sharing(false), version("0.1"), description("Simple clock with widget"), name("Clock"),
-    widget(new ClockWidget(onWidgetClicked, onWidgetLongClicked)),
-    shortcut(new ClockShortcut(onShortcutClicked, onShortcutLongClicked)){}
+    widget(),
+    shortcut(){}
 
     bool work(const context &ctx) override {
 
