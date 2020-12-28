@@ -7,7 +7,7 @@ option(DEBUG "Debug build" ON)
 option(PINEPHONE "Build for Pinephone" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-fpermissive")
+set(CMAKE_CXX_FLAGS "-fpermissive -Wnarrowing -Wenum-compare")
 
 # set(CMAKE_SYSROOT /media/data/iso/postmarketos/chroot_rootfs_pine64-pinephone/)
 

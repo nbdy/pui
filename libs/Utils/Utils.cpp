@@ -24,19 +24,3 @@ std::string Utils::getTimestamp(const std::string &format) {
     strftime(b, sizeof(b), format.c_str(), &t);
     return b;
 }
-
-const char *Utils::getIcon(guiIconName icon, const char* text) {
-    static char buffer[1024] = { 0 };
-    memset(buffer, 0, 1024);
-
-    sprintf(buffer, "#%03i#", icon);
-
-    if (text != nullptr){
-        for (int i = 5; i < 1024; i++){
-            buffer[i] = text[i - 5];
-            if (text[i - 5] == '\0') break;
-        }
-    }
-
-    return buffer;
-}

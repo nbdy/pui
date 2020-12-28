@@ -57,8 +57,8 @@ void ModuleManager::unloadAllModules() {
     loadedModules.clear();
 }
 
-void ModuleManager::work(const context& ctx) {
-    for(auto& lm : loadedModules) lm.second->work(ctx);
+void ModuleManager::work(void* data, const context& ctx) {
+    for(auto& lm : loadedModules) lm.second->work(data, ctx);
 }
 
 std::string ModuleManager::getModuleDirectory() const {
