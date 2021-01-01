@@ -31,11 +31,11 @@ if(PINEPHONE)
 endif()
 
 if(TESTS)
-    include(tests/CMakeLists.txt)
+    add_subdirectory(tests)
 endif()
 
 if(MODULES)
-    include(modules/CMakeLists.txt)
+    add_subdirectory(modules)
 endif()
 
 unset(CMAKE_SYSROOT CACHE)

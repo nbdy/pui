@@ -19,8 +19,6 @@ enum ModuleTypes {
     UI = 0, BACKGROUND = 1
 };
 
-class Shortcut;
-
 class BaseModule {
 protected:
     bool visible = false;
@@ -36,7 +34,10 @@ protected:
 
 public:
     BaseModule();
-    BaseModule(std::string  name, std::string  description, std::string  version, Texture2D shortcut, ModuleTypes type, bool sharing);
+    BaseModule(std::string name, std::string description, std::string version,
+               const std::string& shortcutPath, ModuleTypes type, bool sharing);
+
+    virtual ~BaseModule();
 
     /*!
      * call this in the managers work function
@@ -95,8 +96,11 @@ public:
     void setVisible(bool value);
 
     virtual bool shortcutClicked(Rectangle bounds, const char* text);
+
+    virtual void backButtonClicked(void *data);
 };
 
-extern "C" BaseModule* create();
+typedef BaseModule* create_t();
+// typedef void destroy_(BaseModule*);
 
 #endif //PUI_BASEMODULE_H

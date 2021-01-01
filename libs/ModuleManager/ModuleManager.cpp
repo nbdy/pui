@@ -18,9 +18,21 @@ std::vector<std::string> ModuleManager::listModules(std::string path) {
 
 BaseModule *ModuleManager::createModule(const std::string &path) {
     void* h = dlopen(path.c_str(), RTLD_LAZY);
-    BaseModule* (*create)();
-    create = (BaseModule* (*)()) dlsym(h, "create");
-    return (BaseModule*) create();
+    if(!h) {
+        LOG_F(WARNING, "Could not load module '%s'.", path.c_str());
+        LOG_F(WARNING, "Due to: %s", dlerror());
+        return nullptr;
+    }
+    auto* create = (create_t*) dlsym(h, "create");
+    auto error = dlerror();
+    if(error) {
+        LOG_F(WARNING, "Could not load symbol '%s'.", "create");
+        LOG_F(WARNING, "Due to: %s", error);
+        return nullptr;
+    }
+    auto* t = create();
+    dlclose(h);
+    return t;
 }
 
 void ModuleManager::loadAllModules() {
@@ -30,7 +42,10 @@ void ModuleManager::loadAllModules() {
 void ModuleManager::loadModules(const strVec& modules) {
     for(const auto& m : modules) {
         if(fplus::map_contains(loadedModules, m)) continue; // skip if we already loaded the module
-        if(fplus::is_elem_of(m, loadableModules)) loadedModules[m] = createModule(m);
+        if(fplus::is_elem_of(m, loadableModules)) {
+            auto *lm = createModule(m);
+            if(lm != nullptr) loadedModules[m] = lm;
+        }
     }
 }
 
@@ -70,12 +85,6 @@ void ModuleManager::setModuleDirectory(const std::string &value) {
     unloadAllModules();
     loadableModules.clear();
     loadableModules = listModules(value);
-}
-
-void ModuleManager::drawModules() {
-    for(auto& lm : loadedModules) {
-        if(lm.second->isVisible()) return; // dont draw modules on top of each other
-    }
 }
 
 strVec ModuleManager::getLoadableModules() {

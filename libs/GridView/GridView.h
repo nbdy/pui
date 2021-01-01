@@ -45,7 +45,7 @@ void GridView<M>::loop(void* data) {
 
     for(auto& m : modules) {
         for(int _ = 0; _ < itemsPerRow; _++) {
-            if(m->shortcutClicked(nextBounds , m->getName().c_str())) {
+            if(m->shortcutClicked(nextBounds, m->getName().c_str())) {
                 mgr->setCurrentModule(m);
                 return;
             }

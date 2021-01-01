@@ -80,15 +80,14 @@ void Manager::run() {
 
 void Manager::work() {
     auto ctx = moduleManager.accumulateContext();
-    for(auto& m : moduleManager.getLoadedModules()) {
-        taskflow.emplace([this, ctx, m](){m->work(this, ctx);});
-    }
+    for(auto& m : moduleManager.getLoadedModules()) taskflow.emplace([this, ctx, m](){m->work(this, ctx);});
     executor.run(taskflow).wait();
     taskflow.clear();
 }
 
 void Manager::loop() {
-    if(currentModule != nullptr) currentModule->loop(this);
+    auto *cm = getCurrentModule();
+    if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);
 
     if(GuiButton(Rectangle {0, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
@@ -108,17 +107,27 @@ void Manager::saveState() {
 }
 
 void Manager::backButtonClicked() {
-    LOG_F(INFO, "backButtonClicked");
+    auto* cm = getCurrentModule();
+    if(cm != nullptr) cm->backButtonClicked(this);
 }
 
 void Manager::homeButtonClicked() {
-
+    setCurrentModule(nullptr);
 }
 
 void Manager::otherButtonClicked() {
-
+    LOG_F(INFO, "otherButtonClicked");
 }
 
 void Manager::setCurrentModule(BaseModule *module) {
+    currentModuleLock.lock();
     currentModule = module;
+    currentModuleLock.unlock();
+}
+
+BaseModule *Manager::getCurrentModule() {
+    currentModuleLock.lock();
+    auto* t = currentModule;
+    currentModuleLock.unlock();
+    return t;
 }

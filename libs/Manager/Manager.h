@@ -33,6 +33,7 @@ public:
     virtual void otherButtonClicked();
 
     void setCurrentModule(BaseModule* module);
+    BaseModule* getCurrentModule();
 
 private:
     args::ArgumentParser parser;
@@ -47,6 +48,8 @@ private:
     ModuleManager moduleManager;
 
     GridView<Manager> allModules;
+
+    std::mutex currentModuleLock;
     BaseModule* currentModule = nullptr;
 
     tf::Executor executor;

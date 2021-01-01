@@ -6,15 +6,11 @@
 
 #include <utility>
 
-BaseModule::BaseModule(): type(UI), sharing(false), shortcut() {}
+BaseModule::BaseModule(): type(UI), sharing(false), shortcut(LoadTextureFromImage(GenImageColor(96, 96, GREEN))) {}
 
-BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, Texture2D shortcut, ModuleTypes type, bool sharing):
-name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(shortcut), type(type), sharing(sharing){}
-
-
-extern "C" BaseModule* create() {
-    return new BaseModule();
-}
+BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, const std::string& shortcutPath, ModuleTypes type, bool sharing):
+name(std::move(name)), description(std::move(description)), version(std::move(version)),
+type(type), sharing(sharing), shortcut(LoadTexture(shortcutPath.c_str())) {}
 
 std::string BaseModule::getVersion() {
     return version;
@@ -60,3 +56,8 @@ bool BaseModule::shortcutClicked(Rectangle bounds, const char* text) {
     return GuiImageButton(bounds, text, shortcut);
 }
 
+void BaseModule::backButtonClicked(void* data) {
+
+}
+
+BaseModule::~BaseModule() = default;

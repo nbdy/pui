@@ -9,6 +9,7 @@
 #include <dlfcn.h>
 
 #include <fplus.h>
+#include <loguru/loguru.hpp>
 
 #include <Utils/Utils.h>
 #include <BaseModule/BaseModule.h>
@@ -77,11 +78,6 @@ public:
      * @param ctx
      */
     void work(void* data, const context& ctx);
-
-    /*!
-     * calls draw() on all modules
-     */
-    void drawModules();
 
     /*!
      * get the module directory
