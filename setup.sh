@@ -9,6 +9,21 @@ function install_taskflow_git() {
   cmake ..
   make -j $(nproc)
   sudo make install
+  cd /tmp/
+  rm -rf taskflow
+}
+
+function install_raylib_git() {
+  cd /tmp/
+  git clone https://github.com/raysan5/raylib
+  cd raylib
+  mkdir build
+  cd build
+  cmake ..
+  make -j$(nproc)
+  sudo make install
+  cd /tmp/
+  rm -rf raylib
 }
 
 function install_raylib_git() {
@@ -27,8 +42,8 @@ if [ -f /sbin/apk ]; then
 fi
 
 if [ -f /usr/bin/apt ]; then
-  sudo apt install -y cmake build-essential gcc g++ git
-  install_raylib_git
+  sudo apt install -y cmake build-essential gcc g++ git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev
+  if [ ! -f /usr/local/include/raylib.h ]; then install_raylib_git; fi
 fi
 
-install_taskflow_git
+if [ ! -d /usr/local/include/taskflow ]; then install_taskflow_git; fi
