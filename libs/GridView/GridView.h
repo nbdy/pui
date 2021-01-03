@@ -9,18 +9,16 @@
 
 #include <BaseModule/BaseModule.h>
 
-typedef std::vector<BaseModule*> BaseModules;
-
 template<class M>
 class GridView {
-    BaseModules modules;
+    modVec modules;
     Rectangle bounds;
     int itemsPerRow = 4;
     Vector2 shortcutSize;
 
 public:
     GridView();
-    GridView(Rectangle bounds, BaseModules modules, int itemsPerRow=4);
+    GridView(Rectangle bounds, modVec modules, int itemsPerRow=4);
     ~GridView();
 
     virtual void loop(void* data);
@@ -29,7 +27,7 @@ public:
 };
 
 template<class M>
-GridView<M>::GridView(Rectangle bounds, BaseModules modules, int itemsPerRow): bounds(bounds), modules(std::move(modules)), itemsPerRow(itemsPerRow), shortcutSize(getShortcutSize(bounds.width, itemsPerRow)) {}
+GridView<M>::GridView(Rectangle bounds, modVec modules, int itemsPerRow): bounds(bounds), modules(std::move(modules)), itemsPerRow(itemsPerRow), shortcutSize(getShortcutSize(bounds.width, itemsPerRow)) {}
 
 template<class M>
 GridView<M>::GridView(): modules(), bounds({0, 0, SCREEN_WIDTH, SCREEN_HEIGHT}), shortcutSize(getShortcutSize(SCREEN_WIDTH, itemsPerRow)) {}
@@ -45,7 +43,7 @@ void GridView<M>::loop(void* data) {
 
     for(auto& m : modules) {
         for(int _ = 0; _ < itemsPerRow; _++) {
-            if(m->shortcutClicked(nextBounds , m->getName().c_str())) {
+            if(m->shortcutClicked(nextBounds, m->getName().c_str())) {
                 mgr->setCurrentModule(m);
                 return;
             }

@@ -40,6 +40,8 @@
 #define TIMESTAMP_FORMAT_LOG "%d.%m.%Y-%H:%M:%S"
 #define TIMESTAMP_FORMAT_FILE "%d_%m_%Y-%H_%M_%S.log"
 
+typedef std::vector<std::string> strVec;
+
 class Utils {
 protected:
 

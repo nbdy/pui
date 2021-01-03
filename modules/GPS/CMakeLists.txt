@@ -1,5 +1,5 @@
 project(GPS)
 set(CMAKE_CXX_STANDARD 17)
-add_library(GPS SHARED ${MODULE_DIR}/GPS/GPS.h ${HEADERS})
+add_library(GPS SHARED GPS.cpp ${HEADERS})
 set_target_properties(GPS PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(GPS raylib)

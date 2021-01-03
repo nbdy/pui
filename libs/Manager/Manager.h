@@ -32,7 +32,8 @@ public:
     virtual void homeButtonClicked();
     virtual void otherButtonClicked();
 
-    void setCurrentModule(BaseModule* module);
+    void setCurrentModule(ptModule module);
+    ptModule getCurrentModule();
 
 private:
     args::ArgumentParser parser;
@@ -47,7 +48,8 @@ private:
     ModuleManager moduleManager;
 
     GridView<Manager> allModules;
-    BaseModule* currentModule = nullptr;
+
+    ptModule currentModule = nullptr;
 
     tf::Executor executor;
     tf::Taskflow taskflow;

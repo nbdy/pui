@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(pui)
 
-option(TESTS "Build tests")
-option(MODULES "Build modules")
+option(TESTS "Build tests" OFF)
+option(MODULES "Build modules" ON)
 option(DEBUG "Debug build" ON)
 option(PINEPHONE "Build for Pinephone" OFF)
 
@@ -31,15 +31,17 @@ if(PINEPHONE)
 endif()
 
 if(TESTS)
-    include(tests/CMakeLists.txt)
+    add_subdirectory(tests)
 endif()
 
 if(MODULES)
-    include(modules/CMakeLists.txt)
+    add_subdirectory(modules)
 endif()
 
 unset(CMAKE_SYSROOT CACHE)
 unset(SRCS CACHE)
+
 unset(TESTS CACHE)
+unset(MODULES CACHE)
 unset(DEBUG CACHE)
 unset(PINEPHONE CACHE)
