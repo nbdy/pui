@@ -4,7 +4,7 @@
 
 #include "ModuleManager.h"
 
-ModuleManager::ModuleManager() {}
+ModuleManager::ModuleManager() = default;
 
 ModuleManager::ModuleManager(const std::string &path) {
     moduleDirectory = path;
@@ -16,11 +16,12 @@ std::vector<std::string> ModuleManager::listModules(std::string path) {
     return fplus::keep_if([](const std::string& v) {return fplus::is_suffix_of(std::string(".so"), v);}, Utils::listDirectory(path));
 }
 
-BaseModule *ModuleManager::createModule(const std::string &path) {
+ptModule ModuleManager::createModule(const std::string &path) {
     void* h = dlopen(path.c_str(), RTLD_LAZY);
     if(!h) {
         LOG_F(WARNING, "Could not load module '%s'.", path.c_str());
         LOG_F(WARNING, "Due to: %s", dlerror());
+        dlclose(h);
         return nullptr;
     }
     auto* create = (create_t*) dlsym(h, "create");
@@ -28,10 +29,11 @@ BaseModule *ModuleManager::createModule(const std::string &path) {
     if(error) {
         LOG_F(WARNING, "Could not load symbol '%s'.", "create");
         LOG_F(WARNING, "Due to: %s", error);
+        dlclose(h);
         return nullptr;
     }
-    auto* t = create();
-    dlclose(h);
+    auto t = create();
+    loadedModuleHandles.emplace_back(h);
     return t;
 }
 
@@ -43,7 +45,7 @@ void ModuleManager::loadModules(const strVec& modules) {
     for(const auto& m : modules) {
         if(fplus::map_contains(loadedModules, m)) continue; // skip if we already loaded the module
         if(fplus::is_elem_of(m, loadableModules)) {
-            auto *lm = createModule(m);
+            auto lm = createModule(m);
             if(lm != nullptr) loadedModules[m] = lm;
         }
     }
@@ -60,10 +62,7 @@ context ModuleManager::accumulateContext() {
 void ModuleManager::unloadModules(const strVec &modules) {
     for(const auto& m : modules) {
         if(!fplus::map_contains(loadedModules, m)) continue; // skip if module is not loaded
-        if(fplus::is_elem_of(m, fplus::get_map_keys(loadedModules))) {
-            delete loadedModules[m];
-            loadedModules.erase(m);
-        }
+        if(fplus::is_elem_of(m, fplus::get_map_keys(loadedModules))) loadedModules.erase(m);
     }
 }
 
@@ -91,8 +90,11 @@ strVec ModuleManager::getLoadableModules() {
     return loadableModules;
 }
 
-std::vector<BaseModule*> ModuleManager::getLoadedModules() {
+modVec ModuleManager::getLoadedModules() {
     return fplus::get_map_values(loadedModules);
 }
 
-ModuleManager::~ModuleManager() = default;
+ModuleManager::~ModuleManager() {
+    unloadAllModules();
+    for(auto* h : loadedModuleHandles) dlclose(h);
+}

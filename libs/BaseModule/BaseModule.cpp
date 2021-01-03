@@ -6,7 +6,14 @@
 
 #include <utility>
 
-BaseModule::BaseModule(): type(UI), sharing(false), shortcut(LoadTextureFromImage(GenImageColor(96, 96, GREEN))) {}
+BaseModule::BaseModule(): type(BACKGROUND), sharing(true), shortcut(LoadTextureFromImage(GenImageColor(96, 96, GREEN))) {}
+
+BaseModule::BaseModule(std::string name, std::string description, std::string version):
+name(std::move(name)), description(std::move(description)), version(std::move(version)), type(BACKGROUND), sharing(true){}
+
+BaseModule::BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutPath):
+name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(LoadTexture(shortcutPath.c_str())),
+type(UI), sharing(false){}
 
 BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, const std::string& shortcutPath, ModuleTypes type, bool sharing):
 name(std::move(name)), description(std::move(description)), version(std::move(version)),
@@ -36,20 +43,12 @@ void BaseModule::loop(void *data) {
 
 }
 
-bool BaseModule::isSharing() {
+bool BaseModule::isSharing() const {
     return sharing;
 }
 
 shareMap BaseModule::getShareMap() {
     return shareMap();
-}
-
-bool BaseModule::isVisible() const {
-    return visible;
-}
-
-void BaseModule::setVisible(bool value) {
-    visible = value;
 }
 
 bool BaseModule::shortcutClicked(Rectangle bounds, const char* text) {
@@ -60,4 +59,50 @@ void BaseModule::backButtonClicked(void* data) {
 
 }
 
+void BaseModule::setError(const std::string& msg) {
+    error = true;
+    errorMessage = msg;
+}
+
+bool BaseModule::hasError() const {
+    return error;
+}
+
+std::string BaseModule::getErrorMessage() {
+    return errorMessage;
+}
+
+void BaseModule::deallocate() {
+    delete this;
+}
+
+void BaseModule::drawWidget(void *data) {
+    widget->loop(data);
+}
+
 BaseModule::~BaseModule() = default;
+
+// ----------------------------------------------------------------------------------------
+// BaseWidget
+// ----------------------------------------------------------------------------------------
+BaseWidget::BaseWidget() = default;
+
+BaseWidget::BaseWidget(Rectangle bounds, ptModule module): bounds(bounds), module(module) {}
+
+BaseWidget::~BaseWidget() = default;
+
+bool BaseWidget::onClicked() {
+    return false;
+}
+
+bool BaseWidget::onLongClicked() {
+    return false;
+}
+
+void BaseWidget::loop(void *data) {
+
+}
+
+void BaseWidget::work(context ctx, void *data) {
+
+}

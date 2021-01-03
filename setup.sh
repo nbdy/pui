@@ -11,12 +11,24 @@ function install_taskflow_git() {
   sudo make install
 }
 
+function install_raylib_git() {
+  cd /tmp/
+  git clone https://github.com/raysan5/raylib
+  cd raylib
+  mkdir build
+  cd build
+  cmake .. -DWITH_PIC=ON
+  make -j $(nproc)
+  sudo make install
+}
+
 if [ -f /sbin/apk ]; then
   sudo apk add gcc g++ cmake make raylib-wayland-dev git
 fi
 
 if [ -f /usr/bin/apt ]; then
   sudo apt install -y cmake build-essential gcc g++ git
+  install_raylib_git
 fi
 
 install_taskflow_git

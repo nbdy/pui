@@ -7,8 +7,7 @@
 class Clock : public BaseModule {
 public:
     Clock(): BaseModule("Clock", "Simple clock with a widget", "0.1",
-                        "/home/nbdy/CLionProjects/pui/modules/Clock/icon.png",
-                        UI, false) {};
+                        "/home/nbdy/CLionProjects/pui/modules/Clock/icon.png") {};
 
     ~Clock() override {
         UnloadTexture(shortcut);
@@ -20,10 +19,17 @@ public:
 
     void loop(void *data) override {
         ClearBackground(BLACK);
-        DrawCircle(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3, SCREEN_WIDTH / 2 - SCREEN_WIDTH / 8, GREEN);
+        DrawText(Utils::getTimestamp("%H:%M:%S").c_str(), 20, 10, 72, GREEN);
     }
 };
 
-extern "C" BaseModule* create() {
-    return static_cast<BaseModule*>(new Clock);
+class ClockWidget : public BaseWidget {
+public:
+    explicit ClockWidget(Clock* clock): BaseWidget(Rectangle {20, 20, SCREEN_WIDTH - 40, 400}, clock) {};
+
+
+};
+
+extern "C" tModule* create() {
+    return dynamic_cast<Clock*>(new Clock);
 };

@@ -14,13 +14,13 @@
 #include <Utils/Utils.h>
 #include <BaseModule/BaseModule.h>
 
-typedef std::vector<std::string> strVec;
-typedef std::map<std::string, BaseModule*> moduleMap;
+typedef std::vector<void*> voidVec;
 
 class ModuleManager {
     std::string moduleDirectory;
     strVec loadableModules;
-    moduleMap loadedModules;
+    strModMap loadedModules;
+    voidVec loadedModuleHandles;
 
 public:
     ModuleManager();
@@ -43,7 +43,7 @@ public:
      * returns all currently loaded modules
      * @return
      */
-     std::vector<BaseModule*> getLoadedModules();
+     modVec getLoadedModules();
 
     /*!
      * loads all available modules
@@ -100,7 +100,7 @@ public:
      * @param path
      * @return
      */
-    static std::vector<std::string> listModules(std::string path);
+    static strVec listModules(std::string path);
 
     /*!
      * creates an instance of the specified shared object
@@ -108,7 +108,7 @@ public:
      * @param path
      * @return
      */
-    static BaseModule* createModule(const std::string& path);
+    ptModule createModule(const std::string& path);
 };
 
 

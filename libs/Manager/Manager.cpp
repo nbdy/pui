@@ -5,6 +5,7 @@
 #include "Manager.h"
 
 #include <loguru/loguru.cpp>
+#include <utility>
 
 Manager::Manager(int argc, char **argv):
 parser(("pui - pinephone ui")),
@@ -40,6 +41,13 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
     else logDir = logDirectory.Get() + Utils::getTimestamp(TIMESTAMP_FORMAT_FILE);
 
     loguru::add_file(logDir.c_str(), loguru::Append, loguru::Verbosity_INFO);
+}
+
+void Manager::run() {
+    LOG_F(INFO, "Initializing window with height '%i' and width '%i'.", screenHeight.Get(), screenWidth.Get());
+    InitWindow(screenWidth.Get(), screenHeight.Get(), "pui");
+    LOG_F(INFO, "Setting frame rate to '%i'.", frameRate.Get());
+    SetTargetFPS(frameRate.Get());
 
     moduleManager = ModuleManager(moduleDirectory.Get());
 
@@ -49,14 +57,15 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
     LOG_F(INFO, "Loading all modules.");
     moduleManager.loadAllModules();
 
-    allModules = GridView<Manager>(Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, moduleManager.getLoadedModules());
-}
+    modVec gridModules;
 
-void Manager::run() {
-    LOG_F(INFO, "Initializing window with height '%i' and width '%i'.", screenHeight.Get(), screenWidth.Get());
-    InitWindow(screenWidth.Get(), screenHeight.Get(), "pui");
-    LOG_F(INFO, "Setting frame rate to '%i'.", frameRate.Get());
-    SetTargetFPS(frameRate.Get());
+    for(auto m : moduleManager.getLoadedModules()) {
+        LOG_F(INFO, "%s, %s : %s", m->getName().c_str(), m->getVersion().c_str(), m->getDescription().c_str());
+        if(m->getType() == UI) gridModules.emplace_back(m);
+    }
+
+    allModules = GridView<Manager>(
+            Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
 
     LOG_F(INFO, "Starting drawing loop.");
     while(!WindowShouldClose()) {
@@ -86,7 +95,7 @@ void Manager::work() {
 }
 
 void Manager::loop() {
-    auto *cm = getCurrentModule();
+    auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);
 
@@ -107,7 +116,7 @@ void Manager::saveState() {
 }
 
 void Manager::backButtonClicked() {
-    auto* cm = getCurrentModule();
+    auto cm = getCurrentModule();
     if(cm != nullptr) cm->backButtonClicked(this);
 }
 
@@ -119,15 +128,10 @@ void Manager::otherButtonClicked() {
     LOG_F(INFO, "otherButtonClicked");
 }
 
-void Manager::setCurrentModule(BaseModule *module) {
-    currentModuleLock.lock();
+void Manager::setCurrentModule(ptModule module) {
     currentModule = module;
-    currentModuleLock.unlock();
 }
 
-BaseModule *Manager::getCurrentModule() {
-    currentModuleLock.lock();
-    auto* t = currentModule;
-    currentModuleLock.unlock();
-    return t;
+ptModule Manager::getCurrentModule() {
+    return currentModule;
 }

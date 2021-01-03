@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(Clock)
 set(CMAKE_CXX_STANDARD 17)
-add_library(Clock SHARED ${HEADERS} Clock.cpp)
+add_library(Clock SHARED Clock.cpp ${HEADERS})
 set_target_properties(Clock PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(Clock raylib pthread dl)
 install(FILES icon.png DESTINATION /var/pui/modules/Clock/icon.png)
