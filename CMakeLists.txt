@@ -39,6 +39,17 @@ if(MODULES)
     add_subdirectory(modules)
 endif()
 
+install(TARGETS pui
+        RUNTIME DESTINATION /usr/local/bin/)
+
+add_library(basemodule STATIC
+        libs/BaseModule/BaseModule.h libs/BaseModule/BaseModule.cpp
+        libs/Utils/Utils.h libs/Utils/Utils.cpp)
+
+install(TARGETS basemodule
+        LIBRARY DESTINATION /usr/local/lib/pui/
+        PUBLIC_HEADER DESTINATION /usr/local/include/pui/)
+
 unset(CMAKE_SYSROOT CACHE)
 unset(SRCS CACHE)
 
