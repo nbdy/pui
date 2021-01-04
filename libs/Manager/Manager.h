@@ -21,6 +21,8 @@
 class Manager {
 public:
     explicit Manager(int argc, char **argv);
+    ~Manager();
+
     void parseConfiguration(const std::string& path);
 
     void run();
@@ -47,7 +49,7 @@ private:
 
     ModuleManager moduleManager;
 
-    PulldownBar pulldownBar;
+    PulldownBar *pulldownBar;
     GridView<Manager> allModules;
 
     ptModule currentModule = nullptr;

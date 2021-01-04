@@ -14,8 +14,7 @@ screenHeight(parser, "int", "screen height", {"sh", "screen-height"}, SCREEN_HEI
 screenWidth(parser, "int", "screen width", {"sw", "screen-width"}, SCREEN_WIDTH),
 frameRate(parser, "int", "frame rate", {"fr", "frame-rate"}, FRAME_RATE),
 moduleDirectory(parser, "string", "dir where all the modules live", {"md", "module-directory"}, MODULE_DIRECTORY),
-logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY),
-pulldownBar()
+logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY)
 {
     try {
         parser.ParseCLI(argc, argv);
@@ -43,6 +42,11 @@ pulldownBar()
     loguru::add_file(logDir.c_str(), loguru::Append, loguru::Verbosity_INFO);
 }
 
+Manager::~Manager() {
+    delete pulldownBar;
+    moduleManager.unloadAllModules();
+}
+
 void Manager::run() {
     LOG_F(INFO, "Initializing window with height '%i' and width '%i'.", screenHeight.Get(), screenWidth.Get());
     InitWindow(screenWidth.Get(), screenHeight.Get(), "pui");
@@ -63,6 +67,8 @@ void Manager::run() {
         LOG_F(INFO, "%s, %s : %s", m->getName().c_str(), m->getVersion().c_str(), m->getDescription().c_str());
         if(m->getType() == UI) gridModules.emplace_back(m);
     }
+
+    pulldownBar = new PulldownBar(moduleManager.getLoadedModules());
 
     allModules = GridView<Manager>(
             Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
@@ -95,7 +101,7 @@ void Manager::work() {
 }
 
 void Manager::loop() {
-    pulldownBar.loop();
+    pulldownBar->loop();
     auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);
