@@ -4,7 +4,6 @@
 
 #include "Manager.h"
 
-#include <loguru/loguru.cpp>
 #include <utility>
 
 Manager::Manager(int argc, char **argv):
@@ -43,6 +42,11 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
     loguru::add_file(logDir.c_str(), loguru::Append, loguru::Verbosity_INFO);
 }
 
+Manager::~Manager() {
+    delete pulldownBar;
+    moduleManager.unloadAllModules();
+}
+
 void Manager::run() {
     LOG_F(INFO, "Initializing window with height '%i' and width '%i'.", screenHeight.Get(), screenWidth.Get());
     InitWindow(screenWidth.Get(), screenHeight.Get(), "pui");
@@ -63,6 +67,8 @@ void Manager::run() {
         LOG_F(INFO, "%s, %s : %s", m->getName().c_str(), m->getVersion().c_str(), m->getDescription().c_str());
         if(m->getType() == UI) gridModules.emplace_back(m);
     }
+
+    pulldownBar = new PulldownBar(moduleManager.getLoadedModules());
 
     allModules = GridView<Manager>(
             Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
@@ -95,6 +101,7 @@ void Manager::work() {
 }
 
 void Manager::loop() {
+    pulldownBar->loop();
     auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);

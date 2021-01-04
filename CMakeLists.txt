@@ -24,6 +24,7 @@ target_link_libraries(pui
 
 if(DEBUG)
     add_compile_definitions(DEBUG)
+    add_compile_definitions(ICON_DIRECTORY="${CMAKE_SOURCE_DIR}/icons/")
 endif()
 
 if(PINEPHONE)

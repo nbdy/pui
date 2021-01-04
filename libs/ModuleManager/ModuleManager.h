@@ -9,7 +9,6 @@
 #include <dlfcn.h>
 
 #include <fplus.h>
-#include <loguru/loguru.hpp>
 
 #include <Utils/Utils.h>
 #include <BaseModule/BaseModule.h>
