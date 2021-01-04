@@ -5,7 +5,7 @@
 #ifndef PUI_UTILS_H
 #define PUI_UTILS_H
 
-#include <ctime>
+#include <time.h>
 #include <cstring>
 #include <dirent.h>
 
@@ -13,6 +13,7 @@
 #include <raygui.h>
 
 #include <fplus.h>
+#include <loguru/loguru.hpp>
 #include <ricons.h>
 
 #ifdef PINEPHONE
@@ -50,6 +51,7 @@ public:
 
     static std::vector<std::string> listDirectory(const std::string& path);
     static std::string getTimestamp(const std::string& format=TIMESTAMP_FORMAT_LOG);
+    static unsigned long getTimestampLong();
 };
 
 

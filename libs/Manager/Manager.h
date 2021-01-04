@@ -7,9 +7,9 @@
 
 #include <fplus.h>
 #include <args.h>
-#include <loguru/loguru.hpp>
 #include <taskflow/taskflow.hpp>
 
+#include <PulldownBar/PulldownBar.h>
 #include <GridView/GridView.h>
 #include <ModuleManager/ModuleManager.h>
 
@@ -47,6 +47,7 @@ private:
 
     ModuleManager moduleManager;
 
+    PulldownBar pulldownBar;
     GridView<Manager> allModules;
 
     ptModule currentModule = nullptr;

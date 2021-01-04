@@ -42,7 +42,7 @@ if [ -f /sbin/apk ]; then
 fi
 
 if [ -f /usr/bin/apt ]; then
-  sudo apt install -y cmake build-essential gcc g++ git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev
+  sudo apt install -y cmake build-essential gcc g++ git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libqgpsmm-dev
   if [ ! -f /usr/local/include/raylib.h ]; then install_raylib_git; fi
 fi
 

@@ -4,7 +4,6 @@
 
 #include "Manager.h"
 
-#include <loguru/loguru.cpp>
 #include <utility>
 
 Manager::Manager(int argc, char **argv):
@@ -15,7 +14,8 @@ screenHeight(parser, "int", "screen height", {"sh", "screen-height"}, SCREEN_HEI
 screenWidth(parser, "int", "screen width", {"sw", "screen-width"}, SCREEN_WIDTH),
 frameRate(parser, "int", "frame rate", {"fr", "frame-rate"}, FRAME_RATE),
 moduleDirectory(parser, "string", "dir where all the modules live", {"md", "module-directory"}, MODULE_DIRECTORY),
-logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY)
+logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-directory"}, LOG_DIRECTORY),
+pulldownBar()
 {
     try {
         parser.ParseCLI(argc, argv);
@@ -95,6 +95,7 @@ void Manager::work() {
 }
 
 void Manager::loop() {
+    pulldownBar.loop();
     auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);
