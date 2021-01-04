@@ -33,3 +33,42 @@ unsigned long Utils::getTimestampLong() {
     timespec_get(&t, TIME_UTC);
     return 1000000000 * t.tv_sec + t.tv_nsec;
 }
+
+Texture2D Utils::getIcon(const std::string &iconName, Vector2 size) {
+    std::string iconPath = std::string(ICON_DIRECTORY) + iconName + ".png";
+    if(FileExists(iconPath.c_str())) {
+        auto icon = LoadImage(iconPath.c_str());
+        ImageResize(&icon, size.x, size.y);
+        auto r = LoadTextureFromImage(icon);
+        UnloadImage(icon);
+        return r;
+    }
+    return Texture2D {};
+}
+
+strVec Utils::getNetworkInterfaces() {
+    return listDirectory(NETWORK_PATH);
+}
+
+std::string Utils::getNetworkInterfaceMAC(const std::string &iface) {
+    return readNetworkValue<std::string>(iface, "address");
+}
+
+int Utils::getNetworkInterfaceSpeed(const std::string &iface) {
+    return readNetworkValue<int>(iface, "speed");
+}
+
+int Utils::getNetworkInterfaceRXSpeed(const std::string &iface) {
+    return readNetworkValue<int>(iface, "statistics/rx_packets");
+}
+
+int Utils::getNetworkInterfaceTXSpeed(const std::string &iface) {
+    return readNetworkValue<int>(iface, "statistics/tx_packets");
+}
+
+template<typename T>
+T Utils::readNetworkValue(const std::string &iface, const std::string &file) {
+    return fplus::read_value_unsafe<T>(fplus::read_text_file(NETWORK_PATH + iface +  + "/" + file)());
+}
+
+
