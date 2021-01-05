@@ -71,7 +71,7 @@ void Manager::run() {
     pulldownBar = new PulldownBar(moduleManager.getLoadedModules());
 
     allModules = GridView<Manager>(
-            Rectangle {0, 0, SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
+            Rectangle {0, pulldownBar->getHeight(), SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
 
     LOG_F(INFO, "Starting drawing loop.");
     while(!WindowShouldClose()) {
@@ -101,7 +101,6 @@ void Manager::work() {
 }
 
 void Manager::loop() {
-    pulldownBar->loop();
     auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
     else allModules.loop(this);
@@ -112,6 +111,8 @@ void Manager::loop() {
                  GuiIconText(RICON_HOUSE, nullptr))) homeButtonClicked();
     if(GuiButton(Rectangle {SCREEN_WIDTH - SYSTEM_BUTTON_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
                  GuiIconText(RICON_LAYERS, nullptr))) otherButtonClicked();
+
+    pulldownBar->loop();
 }
 
 void Manager::parseConfiguration(const std::string &path) {
