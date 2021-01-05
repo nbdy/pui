@@ -1,9 +1,11 @@
 #!/bin/bash
 
-if [ $1 -eq "pp" ]; then $1="-DPINEPHONE=ON -DMODULES=ON"; fi
+CMAKE_OPTIONS=""
+
+if [ $1 -eq "pp" ]; then CMAKE_OPTIONS="-DPINEPHONE=ON -DMODULES=ON"; fi
 
 if [ ! -d build ]; then mkdir build; fi
 cd build
 rm -rf *
-cmake .. $1
+cmake .. $CMAKE_OPTIONS
 make -j$(nproc)
