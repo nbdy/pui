@@ -29,7 +29,9 @@ function install_raylib_git() {
 DEPENDENCY_LIST="gcc g++ cmake make git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev gpsd gpsd-clients"
 
 if [ -f /sbin/apk ]; then
-  sudo apk add $DEPENDENCY_LIST gpsd-dev glfw-wayland-dev libexecinfo-dev
+  sudo apk add $DEPENDENCY_LIST gpsd-dev glfw-wayland-dev libexecinfo-dev sway elogind wlroots-dev
+  sudo adduser $USER input
+  sudo adduser $USER video
   if [ ! -f /usr/local/include/raylib.h ]; then install_raylib_git "-DUSE_WAYLAND=ON"; fi
 fi
 
