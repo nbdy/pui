@@ -35,7 +35,7 @@ protected:
     float secondYLock = SCREEN_HEIGHT / 1.2;
 
     void drawPullbar();
-    void drawBrightnessSlider();
+    void drawBrightnessSlider(float x, float y);
     void drawClock(float x, float y) const;
     void drawDate(float x, float y);
     void drawBattery(float x, float y);
