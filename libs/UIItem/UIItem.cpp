@@ -39,6 +39,14 @@ bool UIItem::wasLongClicked() const {
     return r >= longClickThreshold;
 }
 
+float UIItem::getHeight() const {
+    return height;
+}
+
+float UIItem::getWidth() const {
+    return width;
+}
+
 
 
 

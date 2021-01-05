@@ -62,8 +62,9 @@ void PulldownBar::loop() {
 }
 
 void PulldownBar::drawPullbar() {
-    DrawRectangle(x, y, SCREEN_WIDTH, height, GREEN);
-    DrawRectangle(x + lineThickness, y + lineThickness, SCREEN_WIDTH - lineThickness * 2, height - lineThickness * 2, BLACK);
+    DrawRectangle(x, y, SCREEN_WIDTH, height, Color {15, 235, 25, 42});
+    DrawRectangle(x + lineThickness, y + lineThickness, SCREEN_WIDTH - lineThickness * 2, height - lineThickness * 2, Color {20, 20, 20, 200});
+    DrawRectangle(0, 0, SCREEN_WIDTH, y, Color {20, 20, 20, 128});
 
     if(y >= 0) {
         drawClock(8, height / 2);
