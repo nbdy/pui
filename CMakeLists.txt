@@ -7,7 +7,7 @@ option(DEBUG "Debug build" OFF)
 option(PINEPHONE "Build for Pinephone" OFF)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_FLAGS "-fpermissive -Wnarrowing -Wenum-compare")
+set(CMAKE_CXX_FLAGS "-fpermissive -Wno-narrowing -Wno-enum-compare")
 
 # set(CMAKE_SYSROOT /media/data/iso/postmarketos/chroot_rootfs_pine64-pinephone/)
 
@@ -19,8 +19,14 @@ file(GLOB HEADERS ext/*.h ext/*.hpp ext/*.cpp)
 
 add_executable(pui main.cpp ${SRCS} ${HEADERS})
 
-target_link_libraries(pui
-        raylib dl pthread)
+add_library(basemodule STATIC
+        libs/BaseModule/BaseModule.h libs/BaseModule/BaseModule.cpp
+        libs/Utils/Utils.h libs/Utils/Utils.cpp
+        ext/loguru/loguru.hpp ext/loguru/loguru.cpp)
+
+target_link_libraries(pui raylib dl pthread)
+
+target_link_libraries(basemodule raylib pthread dl)
 
 if(DEBUG)
     add_compile_definitions(DEBUG)
@@ -29,6 +35,8 @@ endif()
 
 if(PINEPHONE)
     add_compile_definitions(PINEPHONE)
+    target_link_libraries(pui wayland-client)
+    target_link_libraries(basemodule wayland-client)
 endif()
 
 if(TESTS)
@@ -42,15 +50,11 @@ endif()
 install(TARGETS pui
         RUNTIME DESTINATION /usr/local/bin/)
 
-add_library(basemodule STATIC
-        libs/BaseModule/BaseModule.h libs/BaseModule/BaseModule.cpp
-        libs/Utils/Utils.h libs/Utils/Utils.cpp)
-
-target_link_libraries(basemodule raylib pthread dl)
-
 install(TARGETS basemodule
         LIBRARY DESTINATION /usr/local/lib/pui/
         PUBLIC_HEADER DESTINATION /usr/local/include/pui/)
+
+install(FILES ${CMAKE_SOURCE_DIR}/pui.initscript DESTINATION /etc/init.d/pui)
 
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/icons/ DESTINATION /var/lib/pui/icons/)
 install(DIRECTORY DESTINATION /var/lib/pui/log/)
