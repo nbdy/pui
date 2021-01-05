@@ -54,8 +54,6 @@ install(TARGETS basemodule
         LIBRARY DESTINATION /usr/local/lib/pui/
         PUBLIC_HEADER DESTINATION /usr/local/include/pui/)
 
-install(FILES ${CMAKE_SOURCE_DIR}/init.d/pui DESTINATION /etc/init.d)
-
 install(DIRECTORY ${CMAKE_SOURCE_DIR}/icons/ DESTINATION /var/lib/pui/icons)
 install(DIRECTORY DESTINATION /var/lib/pui/log/)
 install(DIRECTORY DESTINATION /var/lib/pui/modules/)

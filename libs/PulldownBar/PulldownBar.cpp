@@ -82,6 +82,7 @@ void PulldownBar::drawPullbar() {
 
 }
 
+// todo remove 8, 36, 50, 100 and replace with vars
 void PulldownBar::drawBrightnessSlider(float x, float y) {
     if(GuiImageButton(Rectangle {x + 8, y, 36, 36}, "", texBrightnessLow)) brightnessSliderValue = 10;
     brightnessSliderValue = GuiSlider(Rectangle {x + 50, y, SCREEN_WIDTH - 100, 36}, "", "", brightnessSliderValue, 0, 250);
