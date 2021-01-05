@@ -1,0 +1,472 @@
+microwave:~/pui$ tree /sys/class/
+/sys/class/
+├── backlight
+│     └── backlight -> ../../devices/platform/backlight/backlight/backlight
+├── bdi
+│     ├── 179:0 -> ../../devices/virtual/bdi/179:0
+│     ├── 179:32 -> ../../devices/virtual/bdi/179:32
+│     ├── 179:64 -> ../../devices/virtual/bdi/179:64
+│     ├── 254:0 -> ../../devices/virtual/bdi/254:0
+│     ├── 7:0 -> ../../devices/virtual/bdi/7:0
+│     ├── 7:1 -> ../../devices/virtual/bdi/7:1
+│     ├── 7:2 -> ../../devices/virtual/bdi/7:2
+│     ├── 7:3 -> ../../devices/virtual/bdi/7:3
+│     ├── 7:4 -> ../../devices/virtual/bdi/7:4
+│     ├── 7:5 -> ../../devices/virtual/bdi/7:5
+│     ├── 7:6 -> ../../devices/virtual/bdi/7:6
+│     └── 7:7 -> ../../devices/virtual/bdi/7:7
+├── block
+│     ├── loop0 -> ../../devices/virtual/block/loop0
+│     ├── loop1 -> ../../devices/virtual/block/loop1
+│     ├── loop2 -> ../../devices/virtual/block/loop2
+│     ├── loop3 -> ../../devices/virtual/block/loop3
+│     ├── loop4 -> ../../devices/virtual/block/loop4
+│     ├── loop5 -> ../../devices/virtual/block/loop5
+│     ├── loop6 -> ../../devices/virtual/block/loop6
+│     ├── loop7 -> ../../devices/virtual/block/loop7
+│     ├── mmcblk2 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2/mmc2:0001/block/mmcblk2
+│     ├── mmcblk2boot0 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2/mmc2:0001/block/mmcblk2/mmcblk2boot0
+│     ├── mmcblk2boot1 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2/mmc2:0001/block/mmcblk2/mmcblk2boot1
+│     ├── mmcblk2p1 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2/mmc2:0001/block/mmcblk2/mmcblk2p1
+│     ├── mmcblk2p2 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2/mmc2:0001/block/mmcblk2/mmcblk2p2
+│     └── zram0 -> ../../devices/virtual/block/zram0
+├── bluetooth
+│     └── hci0 -> ../../devices/platform/soc/1c28400.serial/serial0/serial0-0/bluetooth/hci0
+├── bsg
+├── devcoredump
+│     └── disabled
+├── devfreq
+├── devlink
+│     ├── 1c20000.clock--1c15000.crypto -> ../../devices/virtual/devlink/1c20000.clock--1c15000.crypto
+│     ├── 1c20000.clock--1c62000.dram-controller -> ../../devices/virtual/devlink/1c20000.clock--1c62000.dram-controller
+│     ├── 1c20000.clock--1ef0000.hdmi-phy -> ../../devices/virtual/devlink/1c20000.clock--1ef0000.hdmi-phy
+│     ├── 1f03800.pwm--backlight -> ../../devices/virtual/devlink/1f03800.pwm--backlight
+│     ├── anx1v0--soc -> ../../devices/virtual/devlink/anx1v0--soc
+│     ├── phy-1c19400.phy.0--1c19000.usb -> ../../devices/virtual/devlink/phy-1c19400.phy.0--1c19000.usb
+│     ├── phy-1c19400.phy.1--1c1b000.usb -> ../../devices/virtual/devlink/phy-1c19400.phy.1--1c1b000.usb
+│     ├── phy-1c19400.phy.1--1c1b400.usb -> ../../devices/virtual/devlink/phy-1c19400.phy.1--1c1b400.usb
+│     ├── phy-1ca1000.d-phy.2--1ca0000.dsi -> ../../devices/virtual/devlink/phy-1ca1000.d-phy.2--1ca0000.dsi
+│     ├── regulator.0--1c20800.pinctrl -> ../../devices/virtual/devlink/regulator.0--1c20800.pinctrl
+│     ├── regulator.0--1f02c00.pinctrl -> ../../devices/virtual/devlink/regulator.0--1f02c00.pinctrl
+│     ├── regulator.0--audio-amplifier -> ../../devices/virtual/devlink/regulator.0--audio-amplifier
+│     ├── regulator.0--usb_phy_generic.3.auto -> ../../devices/virtual/devlink/regulator.0--usb_phy_generic.3.auto
+│     ├── regulator.1--1c10000.mmc -> ../../devices/virtual/devlink/regulator.1--1c10000.mmc
+│     ├── regulator.11--1c21800.lradc -> ../../devices/virtual/devlink/regulator.11--1c21800.lradc
+│     ├── regulator.12--1-0028 -> ../../devices/virtual/devlink/regulator.12--1-0028
+│     ├── regulator.12--1ca0000.dsi -> ../../devices/virtual/devlink/regulator.12--1ca0000.dsi
+│     ├── regulator.12--1ee0000.hdmi -> ../../devices/virtual/devlink/regulator.12--1ee0000.hdmi
+│     ├── regulator.12--2-001e -> ../../devices/virtual/devlink/regulator.12--2-001e
+│     ├── regulator.12--2-0068 -> ../../devices/virtual/devlink/regulator.12--2-0068
+│     ├── regulator.13--1ca0000.dsi.0 -> ../../devices/virtual/devlink/regulator.13--1ca0000.dsi.0
+│     ├── regulator.14--4-003c -> ../../devices/virtual/devlink/regulator.14--4-003c
+│     ├── regulator.14--4-004c -> ../../devices/virtual/devlink/regulator.14--4-004c
+│     ├── regulator.15--1c10000.mmc -> ../../devices/virtual/devlink/regulator.15--1c10000.mmc
+│     ├── regulator.15--1c20800.pinctrl -> ../../devices/virtual/devlink/regulator.15--1c20800.pinctrl
+│     ├── regulator.16--1f015c0.codec-analog -> ../../devices/virtual/devlink/regulator.16--1f015c0.codec-analog
+│     ├── regulator.18--4-003c -> ../../devices/virtual/devlink/regulator.18--4-003c
+│     ├── regulator.18--4-004c -> ../../devices/virtual/devlink/regulator.18--4-004c
+│     ├── regulator.2--serial1-0 -> ../../devices/virtual/devlink/regulator.2--serial1-0
+│     ├── regulator.22--1-005d -> ../../devices/virtual/devlink/regulator.22--1-005d
+│     ├── regulator.22--1ca0000.dsi.0 -> ../../devices/virtual/devlink/regulator.22--1ca0000.dsi.0
+│     ├── regulator.22--backlight -> ../../devices/virtual/devlink/regulator.22--backlight
+│     ├── regulator.23--1-0028 -> ../../devices/virtual/devlink/regulator.23--1-0028
+│     ├── regulator.24--1-0028 -> ../../devices/virtual/devlink/regulator.24--1-0028
+│     ├── regulator.25--1-0028 -> ../../devices/virtual/devlink/regulator.25--1-0028
+│     ├── regulator.26--1-0028 -> ../../devices/virtual/devlink/regulator.26--1-0028
+│     ├── regulator.3--1-0028 -> ../../devices/virtual/devlink/regulator.3--1-0028
+│     ├── regulator.3--1c0f000.mmc -> ../../devices/virtual/devlink/regulator.3--1c0f000.mmc
+│     ├── regulator.3--1c11000.mmc -> ../../devices/virtual/devlink/regulator.3--1c11000.mmc
+│     ├── regulator.3--1c20800.pinctrl -> ../../devices/virtual/devlink/regulator.3--1c20800.pinctrl
+│     ├── regulator.3--led-controller -> ../../devices/virtual/devlink/regulator.3--led-controller
+│     ├── regulator.3--vibrator -> ../../devices/virtual/devlink/regulator.3--vibrator
+│     ├── regulator.4--cpu0 -> ../../devices/virtual/devlink/regulator.4--cpu0
+│     ├── regulator.9--4-003c -> ../../devices/virtual/devlink/regulator.9--4-003c
+│     ├── regulator.9--4-004c -> ../../devices/virtual/devlink/regulator.9--4-004c
+│     ├── usb-5v--soc -> ../../devices/virtual/devlink/usb-5v--soc
+│     ├── vbat-bb--soc -> ../../devices/virtual/devlink/vbat-bb--soc
+│     ├── vbat-wifi--soc -> ../../devices/virtual/devlink/vbat-wifi--soc
+│     └── vconn5v0--soc -> ../../devices/virtual/devlink/vconn5v0--soc
+├── dma
+│     ├── dma0chan0 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan0
+│     ├── dma0chan1 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan1
+│     ├── dma0chan10 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan10
+│     ├── dma0chan11 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan11
+│     ├── dma0chan12 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan12
+│     ├── dma0chan13 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan13
+│     ├── dma0chan14 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan14
+│     ├── dma0chan15 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan15
+│     ├── dma0chan16 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan16
+│     ├── dma0chan17 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan17
+│     ├── dma0chan18 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan18
+│     ├── dma0chan19 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan19
+│     ├── dma0chan2 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan2
+│     ├── dma0chan20 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan20
+│     ├── dma0chan21 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan21
+│     ├── dma0chan22 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan22
+│     ├── dma0chan23 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan23
+│     ├── dma0chan24 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan24
+│     ├── dma0chan25 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan25
+│     ├── dma0chan26 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan26
+│     ├── dma0chan27 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan27
+│     ├── dma0chan28 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan28
+│     ├── dma0chan29 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan29
+│     ├── dma0chan3 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan3
+│     ├── dma0chan30 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan30
+│     ├── dma0chan31 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan31
+│     ├── dma0chan32 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan32
+│     ├── dma0chan33 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan33
+│     ├── dma0chan34 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan34
+│     ├── dma0chan35 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan35
+│     ├── dma0chan36 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan36
+│     ├── dma0chan37 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan37
+│     ├── dma0chan38 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan38
+│     ├── dma0chan39 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan39
+│     ├── dma0chan4 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan4
+│     ├── dma0chan40 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan40
+│     ├── dma0chan41 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan41
+│     ├── dma0chan42 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan42
+│     ├── dma0chan43 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan43
+│     ├── dma0chan44 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan44
+│     ├── dma0chan45 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan45
+│     ├── dma0chan46 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan46
+│     ├── dma0chan47 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan47
+│     ├── dma0chan48 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan48
+│     ├── dma0chan49 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan49
+│     ├── dma0chan5 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan5
+│     ├── dma0chan50 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan50
+│     ├── dma0chan51 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan51
+│     ├── dma0chan52 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan52
+│     ├── dma0chan53 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan53
+│     ├── dma0chan54 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan54
+│     ├── dma0chan55 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan55
+│     ├── dma0chan6 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan6
+│     ├── dma0chan7 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan7
+│     ├── dma0chan8 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan8
+│     └── dma0chan9 -> ../../devices/platform/soc/1c02000.dma-controller/dma/dma0chan9
+├── drm
+│     ├── card0 -> ../../devices/platform/soc/1c40000.gpu/drm/card0
+│     ├── card1 -> ../../devices/platform/display-engine/drm/card1
+│     ├── card1-DSI-1 -> ../../devices/platform/display-engine/drm/card1/card1-DSI-1
+│     ├── card1-HDMI-A-1 -> ../../devices/platform/display-engine/drm/card1/card1-HDMI-A-1
+│     ├── renderD128 -> ../../devices/platform/soc/1c40000.gpu/drm/renderD128
+│     └── version
+├── extcon
+│     └── extcon1 -> ../../devices/platform/soc/1c19400.phy/extcon/extcon1
+├── gpio
+│     ├── export
+│     ├── gpiochip0 -> ../../devices/platform/soc/1c20800.pinctrl/gpio/gpiochip0
+│     ├── gpiochip352 -> ../../devices/platform/soc/1f02c00.pinctrl/gpio/gpiochip352
+│     └── unexport
+├── graphics
+│     ├── fb0 -> ../../devices/platform/display-engine/graphics/fb0
+│     └── fbcon -> ../../devices/virtual/graphics/fbcon
+├── hidraw
+├── hwmon
+│     ├── hwmon0 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-battery-power-supply/power_supply/axp20x-battery/hwmon0
+│     ├── hwmon1 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-usb-power-supply/power_supply/axp20x-usb/hwmon1
+│     ├── hwmon2 -> ../../devices/virtual/thermal/thermal_zone0/hwmon2
+│     ├── hwmon3 -> ../../devices/virtual/thermal/thermal_zone1/hwmon3
+│     └── hwmon4 -> ../../devices/virtual/thermal/thermal_zone2/hwmon4
+├── i2c-adapter
+│     ├── i2c-0 -> ../../devices/platform/soc/1ee0000.hdmi/i2c-0
+│     ├── i2c-1 -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1
+│     ├── i2c-2 -> ../../devices/platform/soc/1c2b000.i2c/i2c-2
+│     ├── i2c-3 -> ../../devices/platform/soc/1c2b400.i2c/i2c-3
+│     ├── i2c-4 -> ../../devices/platform/i2c-csi/i2c-4
+│     └── i2c-5 -> ../../devices/platform/soc/1c2b000.i2c/i2c-2/i2c-5
+├── i2c-dev
+│     ├── i2c-0 -> ../../devices/platform/soc/1ee0000.hdmi/i2c-0/i2c-dev/i2c-0
+│     ├── i2c-1 -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1/i2c-dev/i2c-1
+│     ├── i2c-2 -> ../../devices/platform/soc/1c2b000.i2c/i2c-2/i2c-dev/i2c-2
+│     ├── i2c-3 -> ../../devices/platform/soc/1c2b400.i2c/i2c-3/i2c-dev/i2c-3
+│     ├── i2c-4 -> ../../devices/platform/i2c-csi/i2c-4/i2c-dev/i2c-4
+│     └── i2c-5 -> ../../devices/platform/soc/1c2b000.i2c/i2c-2/i2c-5/i2c-dev/i2c-5
+├── ieee80211
+│     └── phy0 -> ../../devices/platform/soc/1c10000.mmc/mmc_host/mmc1/mmc1:0001/mmc1:0001:1/ieee80211/phy0
+├── input
+│     ├── event0 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp221-pek/input/input0/event0
+│     ├── event1 -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1/1-005d/input/input1/event1
+│     ├── event2 -> ../../devices/platform/soc/1c21800.lradc/input/input2/event2
+│     ├── event3 -> ../../devices/platform/sound/sound/card0/input3/event3
+│     ├── event4 -> ../../devices/platform/vibrator/input/input4/event4
+│     ├── input0 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp221-pek/input/input0
+│     ├── input1 -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1/1-005d/input/input1
+│     ├── input2 -> ../../devices/platform/soc/1c21800.lradc/input/input2
+│     ├── input3 -> ../../devices/platform/sound/sound/card0/input3
+│     └── input4 -> ../../devices/platform/vibrator/input/input4
+├── iommu
+├── lcd
+├── leds
+│     ├── blue:indicator -> ../../devices/platform/leds/leds/blue:indicator
+│     ├── green:indicator -> ../../devices/platform/leds/leds/green:indicator
+│     ├── red:indicator -> ../../devices/platform/leds/leds/red:indicator
+│     └── white:flash -> ../../devices/platform/led-controller/leds/white:flash
+├── mdio_bus
+│     └── fixed-0 -> ../../devices/platform/Fixed MDIO bus.0/mdio_bus/fixed-0
+├── mem
+│     ├── full -> ../../devices/virtual/mem/full
+│     ├── kmsg -> ../../devices/virtual/mem/kmsg
+│     ├── mem -> ../../devices/virtual/mem/mem
+│     ├── null -> ../../devices/virtual/mem/null
+│     ├── random -> ../../devices/virtual/mem/random
+│     ├── urandom -> ../../devices/virtual/mem/urandom
+│     └── zero -> ../../devices/virtual/mem/zero
+├── misc
+│     ├── ashmem -> ../../devices/virtual/misc/ashmem
+│     ├── autofs -> ../../devices/virtual/misc/autofs
+│     ├── binder -> ../../devices/virtual/misc/binder
+│     ├── cpu_dma_latency -> ../../devices/virtual/misc/cpu_dma_latency
+│     ├── device-mapper -> ../../devices/virtual/misc/device-mapper
+│     ├── fuse -> ../../devices/virtual/misc/fuse
+│     ├── hwbinder -> ../../devices/virtual/misc/hwbinder
+│     ├── loop-control -> ../../devices/virtual/misc/loop-control
+│     ├── rfkill -> ../../devices/virtual/misc/rfkill
+│     ├── snapshot -> ../../devices/virtual/misc/snapshot
+│     ├── tun -> ../../devices/virtual/misc/tun
+│     ├── uhid -> ../../devices/virtual/misc/uhid
+│     ├── vfio -> ../../devices/virtual/misc/vfio
+│     └── vndbinder -> ../../devices/virtual/misc/vndbinder
+├── mmc_host
+│     ├── mmc0 -> ../../devices/platform/soc/1c0f000.mmc/mmc_host/mmc0
+│     ├── mmc1 -> ../../devices/platform/soc/1c10000.mmc/mmc_host/mmc1
+│     └── mmc2 -> ../../devices/platform/soc/1c11000.mmc/mmc_host/mmc2
+├── modem-power
+│     └── modem-power -> ../../devices/platform/soc/1c28c00.serial/serial1/serial1-0/modem-power/modem-power
+├── net
+│     ├── lo -> ../../devices/virtual/net/lo
+│     ├── usb0 -> ../../devices/platform/soc/1c19000.usb/musb-hdrc.4.auto/gadget/net/usb0
+│     ├── wlan0 -> ../../devices/platform/soc/1c10000.mmc/mmc_host/mmc1/mmc1:0001/mmc1:0001:1/net/wlan0
+│     └── wwan0 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.4/net/wwan0
+├── phy
+│     ├── phy-1c19400.phy.0 -> ../../devices/platform/soc/1c19400.phy/phy/phy-1c19400.phy.0
+│     ├── phy-1c19400.phy.1 -> ../../devices/platform/soc/1c19400.phy/phy/phy-1c19400.phy.1
+│     └── phy-1ca1000.d-phy.2 -> ../../devices/platform/soc/1ca1000.d-phy/phy/phy-1ca1000.d-phy.2
+├── power_supply
+│     ├── axp20x-battery -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-battery-power-supply/power_supply/axp20x-battery
+│     └── axp20x-usb -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-usb-power-supply/power_supply/axp20x-usb
+├── pwm
+│     └── pwmchip0 -> ../../devices/platform/soc/1f03800.pwm/pwm/pwmchip0
+├── regulator
+│     ├── regulator.0 -> ../../devices/platform/reg-dummy/regulator/regulator.0
+│     ├── regulator.1 -> ../../devices/platform/vbat-wifi/regulator/regulator.1
+│     ├── regulator.10 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.10
+│     ├── regulator.11 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.11
+│     ├── regulator.12 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.12
+│     ├── regulator.13 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.13
+│     ├── regulator.14 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.14
+│     ├── regulator.15 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.15
+│     ├── regulator.16 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.16
+│     ├── regulator.17 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.17
+│     ├── regulator.18 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.18
+│     ├── regulator.19 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.19
+│     ├── regulator.2 -> ../../devices/platform/vbat-bb/regulator/regulator.2
+│     ├── regulator.20 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.20
+│     ├── regulator.21 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.21
+│     ├── regulator.22 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.22
+│     ├── regulator.23 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.23
+│     ├── regulator.24 -> ../../devices/platform/anx1v0/regulator/regulator.24
+│     ├── regulator.25 -> ../../devices/platform/usb-5v/regulator/regulator.25
+│     ├── regulator.26 -> ../../devices/platform/vconn5v0/regulator/regulator.26
+│     ├── regulator.3 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.3
+│     ├── regulator.4 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.4
+│     ├── regulator.5 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.5
+│     ├── regulator.6 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.6
+│     ├── regulator.7 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.7
+│     ├── regulator.8 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.8
+│     └── regulator.9 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/regulator/regulator.9
+├── rfkill
+│     ├── rfkill0 -> ../../devices/platform/soc/1c28c00.serial/serial1/serial1-0/rfkill/rfkill0
+│     ├── rfkill1 -> ../../devices/platform/soc/1c10000.mmc/mmc_host/mmc1/mmc1:0001/mmc1:0001:1/ieee80211/phy0/rfkill1
+│     └── rfkill2 -> ../../devices/platform/soc/1c28400.serial/serial0/serial0-0/bluetooth/hci0/rfkill2
+├── rtc
+│     └── rtc0 -> ../../devices/platform/soc/1f00000.rtc/rtc/rtc0
+├── sas_device
+├── sas_end_device
+├── sas_expander
+├── sas_host
+├── sas_phy
+├── sas_port
+├── scsi_device
+├── scsi_disk
+├── scsi_host
+├── sound
+│     ├── card0 -> ../../devices/platform/sound/sound/card0
+│     ├── controlC0 -> ../../devices/platform/sound/sound/card0/controlC0
+│     ├── pcmC0D0c -> ../../devices/platform/sound/sound/card0/pcmC0D0c
+│     ├── pcmC0D0p -> ../../devices/platform/sound/sound/card0/pcmC0D0p
+│     └── timer -> ../../devices/virtual/sound/timer
+├── tee
+├── thermal
+│     ├── cooling_device0 -> ../../devices/virtual/thermal/cooling_device0
+│     ├── thermal_zone0 -> ../../devices/virtual/thermal/thermal_zone0
+│     ├── thermal_zone1 -> ../../devices/virtual/thermal/thermal_zone1
+│     └── thermal_zone2 -> ../../devices/virtual/thermal/thermal_zone2
+├── tpm
+├── tpmrm
+├── tty
+│     ├── console -> ../../devices/virtual/tty/console
+│     ├── ptmx -> ../../devices/virtual/tty/ptmx
+│     ├── ptyp0 -> ../../devices/virtual/tty/ptyp0
+│     ├── ptyp1 -> ../../devices/virtual/tty/ptyp1
+│     ├── ptyp2 -> ../../devices/virtual/tty/ptyp2
+│     ├── ptyp3 -> ../../devices/virtual/tty/ptyp3
+│     ├── ptyp4 -> ../../devices/virtual/tty/ptyp4
+│     ├── ptyp5 -> ../../devices/virtual/tty/ptyp5
+│     ├── ptyp6 -> ../../devices/virtual/tty/ptyp6
+│     ├── ptyp7 -> ../../devices/virtual/tty/ptyp7
+│     ├── ptyp8 -> ../../devices/virtual/tty/ptyp8
+│     ├── ptyp9 -> ../../devices/virtual/tty/ptyp9
+│     ├── ptypa -> ../../devices/virtual/tty/ptypa
+│     ├── ptypb -> ../../devices/virtual/tty/ptypb
+│     ├── ptypc -> ../../devices/virtual/tty/ptypc
+│     ├── ptypd -> ../../devices/virtual/tty/ptypd
+│     ├── ptype -> ../../devices/virtual/tty/ptype
+│     ├── ptypf -> ../../devices/virtual/tty/ptypf
+│     ├── tty -> ../../devices/virtual/tty/tty
+│     ├── tty0 -> ../../devices/virtual/tty/tty0
+│     ├── tty1 -> ../../devices/virtual/tty/tty1
+│     ├── tty10 -> ../../devices/virtual/tty/tty10
+│     ├── tty11 -> ../../devices/virtual/tty/tty11
+│     ├── tty12 -> ../../devices/virtual/tty/tty12
+│     ├── tty13 -> ../../devices/virtual/tty/tty13
+│     ├── tty14 -> ../../devices/virtual/tty/tty14
+│     ├── tty15 -> ../../devices/virtual/tty/tty15
+│     ├── tty16 -> ../../devices/virtual/tty/tty16
+│     ├── tty17 -> ../../devices/virtual/tty/tty17
+│     ├── tty18 -> ../../devices/virtual/tty/tty18
+│     ├── tty19 -> ../../devices/virtual/tty/tty19
+│     ├── tty2 -> ../../devices/virtual/tty/tty2
+│     ├── tty20 -> ../../devices/virtual/tty/tty20
+│     ├── tty21 -> ../../devices/virtual/tty/tty21
+│     ├── tty22 -> ../../devices/virtual/tty/tty22
+│     ├── tty23 -> ../../devices/virtual/tty/tty23
+│     ├── tty24 -> ../../devices/virtual/tty/tty24
+│     ├── tty25 -> ../../devices/virtual/tty/tty25
+│     ├── tty26 -> ../../devices/virtual/tty/tty26
+│     ├── tty27 -> ../../devices/virtual/tty/tty27
+│     ├── tty28 -> ../../devices/virtual/tty/tty28
+│     ├── tty29 -> ../../devices/virtual/tty/tty29
+│     ├── tty3 -> ../../devices/virtual/tty/tty3
+│     ├── tty30 -> ../../devices/virtual/tty/tty30
+│     ├── tty31 -> ../../devices/virtual/tty/tty31
+│     ├── tty32 -> ../../devices/virtual/tty/tty32
+│     ├── tty33 -> ../../devices/virtual/tty/tty33
+│     ├── tty34 -> ../../devices/virtual/tty/tty34
+│     ├── tty35 -> ../../devices/virtual/tty/tty35
+│     ├── tty36 -> ../../devices/virtual/tty/tty36
+│     ├── tty37 -> ../../devices/virtual/tty/tty37
+│     ├── tty38 -> ../../devices/virtual/tty/tty38
+│     ├── tty39 -> ../../devices/virtual/tty/tty39
+│     ├── tty4 -> ../../devices/virtual/tty/tty4
+│     ├── tty40 -> ../../devices/virtual/tty/tty40
+│     ├── tty41 -> ../../devices/virtual/tty/tty41
+│     ├── tty42 -> ../../devices/virtual/tty/tty42
+│     ├── tty43 -> ../../devices/virtual/tty/tty43
+│     ├── tty44 -> ../../devices/virtual/tty/tty44
+│     ├── tty45 -> ../../devices/virtual/tty/tty45
+│     ├── tty46 -> ../../devices/virtual/tty/tty46
+│     ├── tty47 -> ../../devices/virtual/tty/tty47
+│     ├── tty48 -> ../../devices/virtual/tty/tty48
+│     ├── tty49 -> ../../devices/virtual/tty/tty49
+│     ├── tty5 -> ../../devices/virtual/tty/tty5
+│     ├── tty50 -> ../../devices/virtual/tty/tty50
+│     ├── tty51 -> ../../devices/virtual/tty/tty51
+│     ├── tty52 -> ../../devices/virtual/tty/tty52
+│     ├── tty53 -> ../../devices/virtual/tty/tty53
+│     ├── tty54 -> ../../devices/virtual/tty/tty54
+│     ├── tty55 -> ../../devices/virtual/tty/tty55
+│     ├── tty56 -> ../../devices/virtual/tty/tty56
+│     ├── tty57 -> ../../devices/virtual/tty/tty57
+│     ├── tty58 -> ../../devices/virtual/tty/tty58
+│     ├── tty59 -> ../../devices/virtual/tty/tty59
+│     ├── tty6 -> ../../devices/virtual/tty/tty6
+│     ├── tty60 -> ../../devices/virtual/tty/tty60
+│     ├── tty61 -> ../../devices/virtual/tty/tty61
+│     ├── tty62 -> ../../devices/virtual/tty/tty62
+│     ├── tty63 -> ../../devices/virtual/tty/tty63
+│     ├── tty7 -> ../../devices/virtual/tty/tty7
+│     ├── tty8 -> ../../devices/virtual/tty/tty8
+│     ├── tty9 -> ../../devices/virtual/tty/tty9
+│     ├── ttyS0 -> ../../devices/platform/soc/1c28000.serial/tty/ttyS0
+│     ├── ttyS3 -> ../../devices/platform/serial8250/tty/ttyS3
+│     ├── ttyUSB0 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.0/ttyUSB0/tty/ttyUSB0
+│     ├── ttyUSB1 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.1/ttyUSB1/tty/ttyUSB1
+│     ├── ttyUSB2 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.2/ttyUSB2/tty/ttyUSB2
+│     ├── ttyUSB3 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.3/ttyUSB3/tty/ttyUSB3
+│     ├── ttyp0 -> ../../devices/virtual/tty/ttyp0
+│     ├── ttyp1 -> ../../devices/virtual/tty/ttyp1
+│     ├── ttyp2 -> ../../devices/virtual/tty/ttyp2
+│     ├── ttyp3 -> ../../devices/virtual/tty/ttyp3
+│     ├── ttyp4 -> ../../devices/virtual/tty/ttyp4
+│     ├── ttyp5 -> ../../devices/virtual/tty/ttyp5
+│     ├── ttyp6 -> ../../devices/virtual/tty/ttyp6
+│     ├── ttyp7 -> ../../devices/virtual/tty/ttyp7
+│     ├── ttyp8 -> ../../devices/virtual/tty/ttyp8
+│     ├── ttyp9 -> ../../devices/virtual/tty/ttyp9
+│     ├── ttypa -> ../../devices/virtual/tty/ttypa
+│     ├── ttypb -> ../../devices/virtual/tty/ttypb
+│     ├── ttypc -> ../../devices/virtual/tty/ttypc
+│     ├── ttypd -> ../../devices/virtual/tty/ttypd
+│     ├── ttype -> ../../devices/virtual/tty/ttype
+│     └── ttypf -> ../../devices/virtual/tty/ttypf
+├── typec
+│     ├── port0 -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1/1-0028/typec/port0
+│     └── port0-partner -> ../../devices/platform/soc/1c2ac00.i2c/i2c-1/1-0028/typec/port0/port0-partner
+├── typec_mux
+├── udc
+│     └── musb-hdrc.4.auto -> ../../devices/platform/soc/1c19000.usb/musb-hdrc.4.auto/udc/musb-hdrc.4.auto
+├── usb_role
+│     └── usb0-role-switch -> ../../devices/platform/soc/1c19400.phy/usb_role/usb0-role-switch
+├── usbmisc
+│     └── cdc-wdm0 -> ../../devices/platform/soc/1c1b000.usb/usb3/3-1/3-1:1.4/usbmisc/cdc-wdm0
+├── vc
+│     ├── vcs -> ../../devices/virtual/vc/vcs
+│     ├── vcs1 -> ../../devices/virtual/vc/vcs1
+│     ├── vcs2 -> ../../devices/virtual/vc/vcs2
+│     ├── vcs3 -> ../../devices/virtual/vc/vcs3
+│     ├── vcs4 -> ../../devices/virtual/vc/vcs4
+│     ├── vcs5 -> ../../devices/virtual/vc/vcs5
+│     ├── vcs6 -> ../../devices/virtual/vc/vcs6
+│     ├── vcsa -> ../../devices/virtual/vc/vcsa
+│     ├── vcsa1 -> ../../devices/virtual/vc/vcsa1
+│     ├── vcsa2 -> ../../devices/virtual/vc/vcsa2
+│     ├── vcsa3 -> ../../devices/virtual/vc/vcsa3
+│     ├── vcsa4 -> ../../devices/virtual/vc/vcsa4
+│     ├── vcsa5 -> ../../devices/virtual/vc/vcsa5
+│     ├── vcsa6 -> ../../devices/virtual/vc/vcsa6
+│     ├── vcsu -> ../../devices/virtual/vc/vcsu
+│     ├── vcsu1 -> ../../devices/virtual/vc/vcsu1
+│     ├── vcsu2 -> ../../devices/virtual/vc/vcsu2
+│     ├── vcsu3 -> ../../devices/virtual/vc/vcsu3
+│     ├── vcsu4 -> ../../devices/virtual/vc/vcsu4
+│     ├── vcsu5 -> ../../devices/virtual/vc/vcsu5
+│     └── vcsu6 -> ../../devices/virtual/vc/vcsu6
+├── vfio
+├── video4linux
+│     ├── v4l-subdev0 -> ../../devices/platform/i2c-csi/i2c-4/4-003c/video4linux/v4l-subdev0
+│     ├── v4l-subdev1 -> ../../devices/platform/i2c-csi/i2c-4/4-004c/video4linux/v4l-subdev1
+│     ├── video0 -> ../../devices/platform/soc/1e00000.deinterlace/video4linux/video0
+│     ├── video1 -> ../../devices/platform/soc/1c0e000.video-codec/video4linux/video1
+│     ├── video2 -> ../../devices/platform/soc/1000000.bus/1020000.rotate/video4linux/video2
+│     └── video3 -> ../../devices/platform/soc/1cb0000.csi/video4linux/video3
+├── vtconsole
+│     ├── vtcon0 -> ../../devices/virtual/vtconsole/vtcon0
+│     └── vtcon1 -> ../../devices/virtual/vtconsole/vtcon1
+├── wakeup
+│     ├── wakeup1 -> ../../devices/platform/soc/1f00000.rtc/wakeup/wakeup1
+│     ├── wakeup10 -> ../../devices/virtual/wakeup/wakeup10
+│     ├── wakeup11 -> ../../devices/platform/soc/1c21800.lradc/wakeup/wakeup11
+│     ├── wakeup2 -> ../../devices/platform/soc/1f00000.rtc/rtc/rtc0/alarmtimer.0.auto/wakeup/wakeup2
+│     ├── wakeup3 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp221-pek/wakeup/wakeup3
+│     ├── wakeup4 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-battery-power-supply/power_supply/axp20x-battery/wakeup4
+│     ├── wakeup5 -> ../../devices/platform/soc/1f03400.rsb/sunxi-rsb-3a3/axp20x-usb-power-supply/power_supply/axp20x-usb/wakeup5
+│     ├── wakeup6 -> ../../devices/platform/soc/1c28c00.serial/serial1/serial1-0/wakeup/wakeup6
+│     ├── wakeup7 -> ../../devices/platform/soc/1c19000.usb/musb-hdrc.4.auto/wakeup/wakeup7
+│     ├── wakeup8 -> ../../devices/virtual/wakeup/wakeup8
+│     └── wakeup9 -> ../../devices/virtual/wakeup/wakeup9
+├── watchdog
+├── xt_idletimer
+│     └── timers -> ../../devices/virtual/xt_idletimer/timers
+└── zram-control
+    ├── hot_add
+    └── hot_remove
