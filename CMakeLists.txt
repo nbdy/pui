@@ -50,6 +50,10 @@ install(TARGETS basemodule
         LIBRARY DESTINATION /usr/local/lib/pui/
         PUBLIC_HEADER DESTINATION /usr/local/include/pui/)
 
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/icons/ DESTINATION /var/lib/pui/icons/)
+install(DIRECTORY DESTINATION /var/lib/pui/log/)
+install(DIRECTORY DESTINATION /var/lib/pui/modules/)
+
 unset(CMAKE_SYSROOT CACHE)
 unset(SRCS CACHE)
 
