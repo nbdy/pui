@@ -10,3 +10,6 @@
 - [ ] Music Player
 - [ ] Video Player
 - [ ] Settings (Search for all loaded modules)
+- [ ] File Browser
+- [ ] Internet Browser
+- [ ] QEMU Viewer
