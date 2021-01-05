@@ -21,6 +21,7 @@ void PulldownBar::loadTextures() {
     texBrightnessHigh = Utils::getIcon("brightnessHigh", Vector2 {18, 18});
     texBattery = Utils::getIcon("battery", Vector2 {clockTextSize, clockTextSize});
     texBatteryCharging = Utils::getIcon("batteryCharging", Vector2 {clockTextSize, clockTextSize});
+    texBatteryAlert = Utils::getIcon("batteryAlert", Vector2 {clockTextSize, clockTextSize});
 }
 
 void PulldownBar::unloadTextures() {
@@ -28,6 +29,7 @@ void PulldownBar::unloadTextures() {
     UnloadTexture(texBrightnessHigh);
     UnloadTexture(texBattery);
     UnloadTexture(texBatteryCharging);
+    UnloadTexture(texBatteryAlert);
 }
 
 void PulldownBar::onClicked() {
@@ -94,8 +96,12 @@ void PulldownBar::drawDate(float x, float y) {
 }
 
 void PulldownBar::drawBattery(float x, float y) {
-    auto v = std::to_string(Utils::getBatteryCapacity());
-    DrawText(v.c_str(), x, y - clockTextSize / 2, clockTextSize, GREEN);
-    if(Utils::isBatteryCharging()) DrawTexture(texBatteryCharging, x - 8, y, GREEN);
-    else DrawTexture(texBattery, x - clockTextSize, y - clockTextSize / 2, GREEN);
+    auto c = Utils::getBatteryCapacity();
+    auto v = std::to_string(c);
+    y = y - clockTextSize / 2;
+    x -= clockTextSize;
+    DrawText(v.c_str(), x + clockTextSize, y, clockTextSize, GREEN);
+    if(Utils::isBatteryCharging()) DrawTexture(texBatteryCharging, x, y, GREEN);
+    else if(c > 20) DrawTexture(texBattery, x, y, GREEN);
+    else DrawTexture(texBatteryAlert, x, y, GREEN);
 }
