@@ -17,6 +17,12 @@ protected:
     std::string clockTextFormat = TIMESTAMP_FORMAT_HMS;
     float clockTextSize = 16;
 
+    std::string dateTextFormat = TIMESTAMP_FORMAT_ADB;
+    float dateTextSize = 12;
+
+    Texture2D texBatteryCharging;
+    Texture2D texBattery;
+
     float brightnessSliderYOffset = 36;
     Texture2D texBrightnessLow;
     Texture2D texBrightnessHigh;
@@ -31,8 +37,8 @@ protected:
     void drawBrightnessSlider();
     void drawClock(float x, float y) const;
     void drawDate(float x, float y);
+    void drawBattery(float x, float y);
     // todo:
-    // void drawBattery();
     // void drawGSMSignal();
     // void drawWiFiSignal();
     // void drawNotifications();
@@ -41,10 +47,12 @@ protected:
 
 
     void loadTextures();
+    void unloadTextures();
 
 public:
     PulldownBar();
     explicit PulldownBar(modVec modules);
+    ~PulldownBar();
 
     bool wasClicked() override;
 

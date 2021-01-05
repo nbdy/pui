@@ -12,9 +12,26 @@ PulldownBar::PulldownBar(modVec modules): UIItem(0, 0, 20, SCREEN_WIDTH, 42), mo
     loadTextures();
 }
 
+PulldownBar::~PulldownBar() {
+    // unloadTextures();
+}
+
 void PulldownBar::loadTextures() {
     texBrightnessLow = Utils::getIcon("brightnessLow", Vector2 {18, 18});
     texBrightnessHigh = Utils::getIcon("brightnessHigh", Vector2 {18, 18});
+    texBattery = Utils::getIcon("battery", Vector2 {clockTextSize, clockTextSize});
+    texBatteryCharging = Utils::getIcon("batteryCharging", Vector2 {clockTextSize, clockTextSize});
+}
+
+void PulldownBar::unloadTextures() {
+    UnloadTexture(texBrightnessLow);
+    UnloadTexture(texBrightnessHigh);
+    UnloadTexture(texBattery);
+    UnloadTexture(texBatteryCharging);
+}
+
+void PulldownBar::onClicked() {
+    // for silence
 }
 
 void PulldownBar::onLongClicked() {
@@ -48,9 +65,15 @@ void PulldownBar::drawPullbar() {
 
     if(y >= 0) {
         drawClock(8, height / 2);
-    } else if(y >= firstYLock) {
-        drawClock(8, height / 2);
-    } else if(y >= secondYLock) {
+        drawBattery(SCREEN_WIDTH - 32, height / 2);
+    }
+    if(y >= firstYLock / 2) {
+        drawDate(8, height * 2);
+    }
+    if(y >= firstYLock) {
+
+    }
+    if(y >= secondYLock) {
         drawBrightnessSlider();
     }
 
@@ -67,9 +90,12 @@ void PulldownBar::drawClock(float x, float y) const {
 }
 
 void PulldownBar::drawDate(float x, float y) {
-    DrawText(Utils::getTimestamp("%a., %d. %b.").c_str(), x, y - 6, 12, GREEN);
+    DrawText(Utils::getTimestamp(dateTextFormat).c_str(), x, y - dateTextSize / 2, 12, GREEN);
 }
 
-void PulldownBar::onClicked() {
-    // for silence
+void PulldownBar::drawBattery(float x, float y) {
+    auto v = std::to_string(Utils::getBatteryCapacity());
+    DrawText(v.c_str(), x, y - clockTextSize / 2, clockTextSize, GREEN);
+    if(Utils::isBatteryCharging()) DrawTexture(texBatteryCharging, x - 8, y, GREEN);
+    else DrawTexture(texBattery, x - clockTextSize, y - clockTextSize / 2, GREEN);
 }
