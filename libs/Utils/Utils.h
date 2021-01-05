@@ -5,7 +5,7 @@
 #ifndef PUI_UTILS_H
 #define PUI_UTILS_H
 
-#include <time.h>
+#include <ctime>
 #include <cstring>
 #include <dirent.h>
 
@@ -34,9 +34,9 @@
 #define LOG_DIRECTORY "./log/"
 #define MODULE_DIRECTORY "./"
 #else
-#define LOG_DIRECTORY "/var/pui/log/"
-#define MODULE_DIRECTORY "/var/pui/modules/"
-#define ICON_DIRECTORY "/var/pui/icons/"
+#define LOG_DIRECTORY "/var/lib/pui/log/"
+#define MODULE_DIRECTORY "/var/lib/pui/modules/"
+#define ICON_DIRECTORY "/var/lib/pui/icons/"
 #endif
 
 #define TIMESTAMP_FORMAT_ADB "%a., %d. %b."
