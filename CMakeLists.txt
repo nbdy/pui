@@ -46,6 +46,8 @@ add_library(basemodule STATIC
         libs/BaseModule/BaseModule.h libs/BaseModule/BaseModule.cpp
         libs/Utils/Utils.h libs/Utils/Utils.cpp)
 
+target_link_libraries(basemodule raylib pthread dl)
+
 install(TARGETS basemodule
         LIBRARY DESTINATION /usr/local/lib/pui/
         PUBLIC_HEADER DESTINATION /usr/local/include/pui/)
