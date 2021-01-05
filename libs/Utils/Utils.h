@@ -39,12 +39,18 @@
 #define ICON_DIRECTORY "/var/pui/icons/"
 #endif
 
+#define TIMESTAMP_FORMAT_ADB "%a., %d. %b."
 #define TIMESTAMP_FORMAT_HM "%H:%M"
 #define TIMESTAMP_FORMAT_HMS "%H:%M:%S"
 #define TIMESTAMP_FORMAT_LOG "%d.%m.%Y-%H:%M:%S"
 #define TIMESTAMP_FORMAT_FILE "%d_%m_%Y-%H_%M_%S.log"
 
-#define NETWORK_PATH "/sys/class/net/eth0/address/"
+#define LED_PATH "/sys/class/leds/"
+#define NETWORK_PATH "/sys/class/net/"
+#define THERMAL_PATH "/sys/class/thermal/"
+#define BACKLIGHT_PATH "/sys/class/backlight/backlight/"
+#define POWER_SUPPLY_BATTERY_PATH "/sys/class/power_supply/axp20x-battery/"
+#define POWER_SUPPLY_USB_PATH "/sys/class/power_supply/axp20x-usb/"
 
 typedef std::vector<std::string> strVec;
 
@@ -59,10 +65,32 @@ public:
     static unsigned long getTimestampLong();
     static Texture2D getIcon(const std::string& iconName, Vector2 size);
 
-    int getBatteryCapacity();
+    template<typename T> static T readValue(const std::string& path);
 
-    void setScreenBrightness(int value);
-    int getScreenBrightness();
+    template<typename T> static T readBatteryValue(const std::string& file);
+
+    static int getBatteryCapacity();
+    static int getBatteryConstantChargeCurrent();
+    static int getBatteryVoltage();
+    static int getBatteryCurrent();
+    static std::string getBatteryHealth();
+    static std::string getBatteryState();
+    static bool isBatteryCharging();
+
+    template<typename T> static T readBacklightValue(const std::string& file);
+    static int getBacklightBrightness();
+    static int getBacklightMaxBrightness();
+
+    static strVec getThermalZones();
+    template<typename T> static T readThermalValue(const std::string &thermal, const std::string& file);
+    static int readThermalTempValue(const std::string& zone);
+    static unsigned long getAverageTemperature();
+
+    template<class T> static T readLEDValue(const std::string &led, const std::string& file);
+    template<class T> static T readBlueLEDValue(const std::string& file);
+    template<class T> static T readGreenLEDValue(const std::string& file);
+    template<class T> static T readRedLEDValue(const std::string& file);
+    template<class T> static T readWhiteLEDValue(const std::string& file);
 
     static strVec getNetworkInterfaces();
     template<typename T> static T readNetworkValue(const std::string& iface, const std::string& file);
