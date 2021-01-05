@@ -17,6 +17,7 @@
 #include <ricons.h>
 
 #ifdef PINEPHONE
+#define LOGURU_STACKTRACES 0
 #define SCREEN_WIDTH 720
 #define SCREEN_HEIGHT 1440
 #define FRAME_RATE 60
