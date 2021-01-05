@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $1 -eq "pp" ]; then $1="-DPINEPHONE=ON"; fi
+if [ $1 -eq "pp" ]; then $1="-DPINEPHONE=ON -DMODULES=ON"; fi
 
 if [ ! -d build ]; then mkdir build; fi
 cd build
