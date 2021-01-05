@@ -1,5 +1,5 @@
 #!/bin/bash
 
-if [ ! -d "build" ]; then ./build.sh pp; fi
+./build.sh pp
 cd build
 sudo make install
