@@ -82,9 +82,9 @@ void PulldownBar::drawPullbar() {
 }
 
 void PulldownBar::drawBrightnessSlider() {
-    if(GuiImageButton(Rectangle {x + 10, brightnessSliderYOffset, 36, 36}, "", texBrightnessLow)) brightnessSliderValue = 10;
+    if(GuiImageButton(Rectangle {x + 8, brightnessSliderYOffset, 36, 36}, "", texBrightnessLow)) brightnessSliderValue = 10;
     brightnessSliderValue = GuiSlider(Rectangle {x + 50, brightnessSliderYOffset, SCREEN_WIDTH - 100, 36}, "", "", brightnessSliderValue, 0, 250);
-    if(GuiImageButton(Rectangle {SCREEN_WIDTH - 10 - 36, brightnessSliderYOffset, 36, 36}, "", texBrightnessHigh)) brightnessSliderValue = 250;
+    if(GuiImageButton(Rectangle {SCREEN_WIDTH - 8 - 36, brightnessSliderYOffset, 36, 36}, "", texBrightnessHigh)) brightnessSliderValue = 250;
 }
 
 void PulldownBar::drawClock(float x, float y) const {
