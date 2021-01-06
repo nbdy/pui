@@ -11,13 +11,13 @@ BaseModule::BaseModule(): type(BACKGROUND), sharing(true), shortcut(LoadTextureF
 BaseModule::BaseModule(std::string name, std::string description, std::string version):
 name(std::move(name)), description(std::move(description)), version(std::move(version)), type(BACKGROUND), sharing(true){}
 
-BaseModule::BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutPath):
-name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(LoadTexture(shortcutPath.c_str())),
+BaseModule::BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutName):
+name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(Utils::getIcon(shortcutName, SHORTCUT_SIZE)),
 type(UI), sharing(false){}
 
-BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, const std::string& shortcutPath, ModuleTypes type, bool sharing):
+BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, const std::string& shortcutName, ModuleTypes type, bool sharing):
 name(std::move(name)), description(std::move(description)), version(std::move(version)),
-type(type), sharing(sharing), shortcut(LoadTexture(shortcutPath.c_str())) {}
+type(type), sharing(sharing), shortcut(Utils::getIcon(shortcutName, SHORTCUT_SIZE)) {}
 
 std::string BaseModule::getVersion() {
     return version;

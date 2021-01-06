@@ -143,3 +143,7 @@ void Manager::setCurrentModule(ptModule module) {
 ptModule Manager::getCurrentModule() {
     return currentModule;
 }
+
+ModuleManager *Manager::getModuleManager() {
+    return &moduleManager;
+}
