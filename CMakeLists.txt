@@ -15,18 +15,17 @@ include_directories(libs)
 include_directories(ext)
 
 file(GLOB_RECURSE SRCS libs/*.cpp libs/*.h)
-file(GLOB HEADERS ext/*.h ext/*.hpp ext/*.cpp)
+file(GLOB_RECURSE HEADERS ext/*.h ext/*.hpp ext/*.cpp)
 
 add_executable(pui main.cpp ${SRCS} ${HEADERS})
 
 add_library(basemodule STATIC
         libs/BaseModule/BaseModule.h libs/BaseModule/BaseModule.cpp
-        libs/Utils/Utils.h libs/Utils/Utils.cpp
-        ext/loguru/loguru.hpp ext/loguru/loguru.cpp)
+        libs/Utils/Utils.h libs/Utils/Utils.cpp)
 
-target_link_libraries(pui raylib dl pthread)
+target_link_libraries(pui SDL2 dl pthread GL)
 
-target_link_libraries(basemodule raylib pthread dl)
+target_link_libraries(basemodule SDL2 pthread dl GL)
 
 if(DEBUG)
     add_compile_definitions(DEBUG)

@@ -4,8 +4,6 @@
 
 #include "Utils.h"
 
-#include <loguru/loguru.cpp>
-
 Utils::Utils() = default;
 
 std::vector<std::string> Utils::listDirectory(const std::string &path) {
@@ -32,18 +30,6 @@ unsigned long Utils::getTimestampLong() {
     struct timespec t;
     timespec_get(&t, TIME_UTC);
     return 1000000000 * t.tv_sec + t.tv_nsec;
-}
-
-Texture2D Utils::getIcon(const std::string &iconName, Vector2 size) {
-    std::string iconPath = std::string(ICON_DIRECTORY) + iconName + ".png";
-    if(FileExists(iconPath.c_str())) {
-        auto icon = LoadImage(iconPath.c_str());
-        ImageResize(&icon, size.x, size.y);
-        auto r = LoadTextureFromImage(icon);
-        UnloadImage(icon);
-        return r;
-    }
-    return Texture2D {};
 }
 
 strVec Utils::getNetworkInterfaces() {

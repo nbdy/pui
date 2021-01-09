@@ -4,8 +4,6 @@
 
 #include "Manager.h"
 
-#include <utility>
-
 Manager::Manager(int argc, char **argv):
 parser(("pui - pinephone ui")),
 help(parser, "help", "display this help text", {'h', "help"}),
@@ -40,6 +38,8 @@ logDirectory(parser, "string", "dir where all the logs go", {"ld", "log-director
     else logDir = logDirectory.Get() + Utils::getTimestamp(TIMESTAMP_FORMAT_FILE);
 
     loguru::add_file(logDir.c_str(), loguru::Append, loguru::Verbosity_INFO);
+
+    doRun = true;
 }
 
 Manager::~Manager() {
@@ -48,10 +48,31 @@ Manager::~Manager() {
 }
 
 void Manager::run() {
-    LOG_F(INFO, "Initializing window with height '%i' and width '%i'.", screenHeight.Get(), screenWidth.Get());
-    InitWindow(screenWidth.Get(), screenHeight.Get(), "pui");
-    LOG_F(INFO, "Setting frame rate to '%i'.", frameRate.Get());
-    SetTargetFPS(frameRate.Get());
+    LOG_F(INFO, "Initializing SDL");
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0){
+        LOG_F(ERROR, "Error whilst initializing SDL: %s", SDL_GetError());
+    }
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+    SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+    auto window_flags = (SDL_WindowFlags)(SDL_WINDOW_OPENGL |
+#ifdef FULL_SCREEN
+SDL_WINDOW_FULLSCREEN |
+#endif
+            SDL_WINDOW_ALLOW_HIGHDPI);
+    SDL_Window* window = SDL_CreateWindow("Dear ImGui SDL2+OpenGL example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, window_flags);
+    SDL_GLContext gl_context = SDL_GL_CreateContext(window);
+    SDL_GL_MakeCurrent(window, gl_context);
+    SDL_GL_SetSwapInterval(1);
+
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplSDL2_InitForOpenGL(window, gl_context);
+    ImGui_ImplOpenGL2_Init();
 
     moduleManager = ModuleManager(moduleDirectory.Get());
 
@@ -69,25 +90,48 @@ void Manager::run() {
     }
 
     pulldownBar = new PulldownBar(moduleManager.getLoadedModules());
-
-    allModules = GridView<Manager>(
-            Rectangle {0, pulldownBar->getHeight(), SCREEN_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT}, gridModules);
-
+    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     LOG_F(INFO, "Starting drawing loop.");
-    while(!WindowShouldClose()) {
-        BeginDrawing();
-        ClearBackground(BLACK);
+    while(doRun) {
+        SDL_Event event;
+        while (SDL_PollEvent(&event)){
+            ImGui_ImplSDL2_ProcessEvent(&event);
+            if (event.type == SDL_QUIT)
+                doRun = false;
+            if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(window))
+                doRun = false;
+        }
 
-        loop();
+        ImGui_ImplOpenGL2_NewFrame();
+        ImGui_ImplSDL2_NewFrame(window);
+        ImGui::NewFrame();
+        ImGui::Begin("pui");
+        ImGui::SetNextWindowPos(ImVec2 {0, 0});
+        ImGui::SetWindowSize(ImVec2 {SCREEN_WIDTH, SCREEN_HEIGHT});
+        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        ImGui::End();
 
-        EndDrawing();
+        ImGui::Render();
+        glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
+        glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        glClear(GL_COLOR_BUFFER_BIT);
+        //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
+        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+        SDL_GL_SwapWindow(window);
     }
+
     LOG_F(INFO, "Stopped drawing loop.");
 
     LOG_F(INFO, "Saving state.");
     saveState();
 
-    CloseWindow();
+    ImGui_ImplOpenGL2_Shutdown();
+    ImGui_ImplSDL2_Shutdown();
+    ImGui::DestroyContext();
+
+    SDL_GL_DeleteContext(gl_context);
+    SDL_DestroyWindow(window);
+    SDL_Quit();
 
     LOG_F(INFO, "Unloading modules.");
     moduleManager.unloadAllModules();
@@ -103,14 +147,6 @@ void Manager::work() {
 void Manager::loop() {
     auto cm = getCurrentModule();
     if(cm != nullptr) cm->loop(this);
-    else allModules.loop(this);
-
-    if(GuiButton(Rectangle {0, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
-                 GuiIconText(RICON_ARROW_LEFT_FILL, nullptr))) backButtonClicked();
-    if(GuiButton(Rectangle {SCREEN_WIDTH / 2 - SYSTEM_BUTTON_WIDTH / 2, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
-                 GuiIconText(RICON_HOUSE, nullptr))) homeButtonClicked();
-    if(GuiButton(Rectangle {SCREEN_WIDTH - SYSTEM_BUTTON_WIDTH, SCREEN_HEIGHT - SYSTEM_BUTTON_HEIGHT, SYSTEM_BUTTON_WIDTH, SYSTEM_BUTTON_HEIGHT},
-                 GuiIconText(RICON_LAYERS, nullptr))) otherButtonClicked();
 
     pulldownBar->loop();
 }

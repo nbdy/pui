@@ -28,9 +28,7 @@ void UIItem::loop() {
 }
 
 bool UIItem::wasClicked() {
-    auto mp = GetMousePosition();
-    return (IsMouseButtonDown(MOUSE_LEFT_BUTTON) &&
-           (mp.x > x && mp.x < x + width && mp.y > y && mp.y < y + height));
+
 }
 
 bool UIItem::wasLongClicked() const {

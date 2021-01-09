@@ -9,7 +9,6 @@
 #include <map>
 #include <string>
 
-#include <raylib.h>
 #include <Utils/Utils.h>
 
 #define SHORTCUT_SIZE Vector2 {96, 96}
@@ -35,15 +34,11 @@ protected:
     std::string description;
     std::string version;
 
-    Texture2D shortcut {};
     BaseWidget* widget;
 
 public:
     BaseModule();
     BaseModule(std::string name, std::string description, std::string version);
-    BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutName);
-    BaseModule(std::string name, std::string description, std::string version,
-               const std::string& shortcutName, ModuleTypes type, bool sharing);
 
     virtual ~BaseModule();
 
@@ -93,8 +88,6 @@ public:
      */
     virtual shareMap getShareMap();
 
-    bool shortcutClicked(Rectangle bounds, const char* text);
-
     virtual void backButtonClicked(void *data);
 
     void setError(const std::string& msg);
@@ -113,12 +106,10 @@ typedef std::map<std::string, ptModule> strModMap;
 class BaseWidget {
 protected:
     time_t* clicked = nullptr;
-    Rectangle bounds{};
     ptModule module{};
 
 public:
     BaseWidget();
-    BaseWidget(Rectangle bounds, ptModule module);
     virtual ~BaseWidget();
 
     virtual bool onClicked();

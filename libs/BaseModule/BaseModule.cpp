@@ -6,19 +6,6 @@
 
 #include <utility>
 
-BaseModule::BaseModule(): type(BACKGROUND), sharing(true), shortcut(LoadTextureFromImage(GenImageColor(96, 96, GREEN))) {}
-
-BaseModule::BaseModule(std::string name, std::string description, std::string version):
-name(std::move(name)), description(std::move(description)), version(std::move(version)), type(BACKGROUND), sharing(true){}
-
-BaseModule::BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutName):
-name(std::move(name)), description(std::move(description)), version(std::move(version)), shortcut(Utils::getIcon(shortcutName, SHORTCUT_SIZE)),
-type(UI), sharing(false){}
-
-BaseModule::BaseModule(std::string  name, std::string  description, std::string  version, const std::string& shortcutName, ModuleTypes type, bool sharing):
-name(std::move(name)), description(std::move(description)), version(std::move(version)),
-type(type), sharing(sharing), shortcut(Utils::getIcon(shortcutName, SHORTCUT_SIZE)) {}
-
 std::string BaseModule::getVersion() {
     return version;
 }
@@ -49,10 +36,6 @@ bool BaseModule::isSharing() const {
 
 shareMap BaseModule::getShareMap() {
     return shareMap();
-}
-
-bool BaseModule::shortcutClicked(Rectangle bounds, const char* text) {
-    return GuiImageButton(bounds, text, shortcut);
 }
 
 void BaseModule::backButtonClicked(void* data) {
@@ -86,8 +69,6 @@ BaseModule::~BaseModule() = default;
 // BaseWidget
 // ----------------------------------------------------------------------------------------
 BaseWidget::BaseWidget() = default;
-
-BaseWidget::BaseWidget(Rectangle bounds, ptModule module): bounds(bounds), module(module) {}
 
 BaseWidget::~BaseWidget() = default;
 

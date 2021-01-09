@@ -9,12 +9,16 @@
 #include <cstring>
 #include <dirent.h>
 
-#define RAYGUI_SUPPORT_ICONS
-#include <raygui.h>
-
 #include <fplus.h>
 #include <loguru/loguru.hpp>
-#include <ricons.h>
+
+#include <imgui/imgui.h>
+#include <imgui/imgui_impl_sdl.h>
+#include <imgui/imgui_impl_opengl2.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
+
 
 #ifdef PINEPHONE
 #define LOGURU_STACKTRACES 0
@@ -25,6 +29,7 @@
 #define SCREEN_WIDTH 1920
 #define SCREEN_HEIGHT 1080
 #define FRAME_RATE 60
+#define FULL_SCREEN
 #else
 #define SCREEN_WIDTH (float) 720 / 2
 #define SCREEN_HEIGHT (float) 1440 / 2
@@ -64,7 +69,6 @@ public:
     static std::vector<std::string> listDirectory(const std::string& path);
     static std::string getTimestamp(const std::string& format=TIMESTAMP_FORMAT_LOG);
     static unsigned long getTimestampLong();
-    static Texture2D getIcon(const std::string& iconName, Vector2 size);
 
     template<typename T> static T readValue(const std::string& path);
 

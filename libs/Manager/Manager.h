@@ -9,8 +9,8 @@
 #include <args.h>
 #include <taskflow/taskflow.hpp>
 
+#include <Utils/Utils.h>
 #include <PulldownBar/PulldownBar.h>
-#include <GridView/GridView.h>
 #include <ModuleManager/ModuleManager.h>
 
 #define SYSTEM_BUTTON_PADDING 2
@@ -52,12 +52,13 @@ private:
     ModuleManager moduleManager;
 
     PulldownBar *pulldownBar;
-    GridView<Manager> allModules;
 
     ptModule currentModule = nullptr;
 
     tf::Executor executor;
     tf::Taskflow taskflow;
+
+    bool doRun = false;
 };
 
 

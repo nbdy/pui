@@ -20,13 +20,7 @@ protected:
     std::string dateTextFormat = TIMESTAMP_FORMAT_ADB;
     float dateTextSize = 12;
 
-    Texture2D texBatteryAlert;
-    Texture2D texBatteryCharging;
-    Texture2D texBattery;
-
     float brightnessSliderYOffset = 36;
-    Texture2D texBrightnessLow;
-    Texture2D texBrightnessHigh;
     float brightnessSliderValue = 60;
 
     float drawbackSpeed = 16;
