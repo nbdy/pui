@@ -107,15 +107,14 @@ SDL_WINDOW_FULLSCREEN |
         ImGui::NewFrame();
         ImGui::Begin("pui");
         ImGui::SetNextWindowPos(ImVec2 {0, 0});
+        ImGui::SetNextWindowSize(ImVec2 {SCREEN_WIDTH, SCREEN_HEIGHT});
         ImGui::SetWindowSize(ImVec2 {SCREEN_WIDTH, SCREEN_HEIGHT});
-        ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+        loop();
         ImGui::End();
-
         ImGui::Render();
         glViewport(0, 0, (int)io.DisplaySize.x, (int)io.DisplaySize.y);
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT);
-        //glUseProgram(0); // You may want this if using this code in an OpenGL 3+ context where shaders may be bound
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
         SDL_GL_SwapWindow(window);
     }
