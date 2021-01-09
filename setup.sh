@@ -26,13 +26,17 @@ function install_raylib_git() {
   rm -rf raylib
 }
 
+DEPENDENCY_LIST="gcc g++ cmake make git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev gpsd gpsd-clients"
+
 if [ -f /sbin/apk ]; then
-  sudo apk add gcc g++ cmake make git
+  sudo apk add $DEPENDENCY_LIST gpsd-dev glfw-wayland-dev libexecinfo-dev sway elogind wlroots-dev
+  sudo adduser $USER input
+  sudo adduser $USER video
   if [ ! -f /usr/local/include/raylib.h ]; then install_raylib_git "-DUSE_WAYLAND=ON"; fi
 fi
 
 if [ -f /usr/bin/apt ]; then
-  sudo apt install -y cmake build-essential gcc g++ git libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev libgl-dev libqgpsmm-dev
+  sudo apt install -y $DEPENDENCY_LIST build-essential libgl-dev libgps-dev
   if [ ! -f /usr/local/include/raylib.h ]; then install_raylib_git ""; fi
 fi
 

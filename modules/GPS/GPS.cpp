@@ -44,3 +44,7 @@ public:
         return r;
     }
 };
+
+extern "C" tModule* create() {
+    return dynamic_cast<GPS*>(new GPS);
+};

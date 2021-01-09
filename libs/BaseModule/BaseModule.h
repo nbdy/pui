@@ -12,6 +12,7 @@
 #include <raylib.h>
 #include <Utils/Utils.h>
 
+#define SHORTCUT_SIZE Vector2 {96, 96}
 
 typedef std::map<std::string, std::any> shareMap;
 typedef std::map<std::string, shareMap> context;
@@ -40,9 +41,9 @@ protected:
 public:
     BaseModule();
     BaseModule(std::string name, std::string description, std::string version);
-    BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutPath);
+    BaseModule(std::string name, std::string description, std::string version, const std::string& shortcutName);
     BaseModule(std::string name, std::string description, std::string version,
-               const std::string& shortcutPath, ModuleTypes type, bool sharing);
+               const std::string& shortcutName, ModuleTypes type, bool sharing);
 
     virtual ~BaseModule();
 

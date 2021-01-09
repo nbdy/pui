@@ -37,6 +37,8 @@ public:
     void setCurrentModule(ptModule module);
     ptModule getCurrentModule();
 
+    ModuleManager* getModuleManager();
+
 private:
     args::ArgumentParser parser;
     args::HelpFlag help;

@@ -31,6 +31,9 @@ public:
 
     virtual void onClicked() {LOG_F(WARNING, "UIItem::onClicked should be overwritten");};
     virtual void onLongClicked() {LOG_F(WARNING, "UIItem::onLongClicked should be overwritten");};
+
+    [[nodiscard]] float getHeight() const;
+    [[nodiscard]] float getWidth() const;
 };
 
 
